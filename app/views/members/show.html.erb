@@ -53,4 +53,5 @@
   <%= link_to 'Edit', edit_member_path(@member), class:"btn btn-outline-dark btn-sm" %>
 <%end %>
 <%= link_to 'Back', members_path, class:"btn btn-outline-dark btn-sm" %>
+<%= mail_to  @member.email, 'Email Member', subject: "Current Ol'Ags Member", class: 'btn btn-outline-dark btn-sm' %>
 
