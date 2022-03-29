@@ -8,7 +8,7 @@ class Due < ApplicationRecord
   validates :paid, inclusion: [true, false]
 
   def due_mail
-    ar = ','
+    ar = ''
     Due.select('Distinct(member_id), dues.member_id').where(paid: 0).each do |d|
       ar += Member.where(id: d.member_id).first.email
       ar += ','

@@ -1,8 +1,7 @@
 <p id="notice"><%= notice %></p>
 <h1>Members</h1>
-
+<%= Member.new.member_mail(@members)%>
 <%= render 'members/search_form.html.erb' %>
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -26,7 +25,6 @@
               <%end %>
             </tr>
           </thead>
-
           <tbody>
             <% @members.each do |member| %>
               <tr>

@@ -9,8 +9,31 @@ require 'rails_helper'
 OmniAuth.config.silence_get_warning = true
 RSpec.describe('Authentication', type: :feature) do
   before do
+<<<<<<< HEAD
     Admin.create_or_find_by!(full_name: 'check', email: 'JH@gmail.com')
     Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu', joinDate: '01/01/2001', admin: 1)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    Admin.create_or_find_by!(full_name: 'check', email: 'JH@gmail.com')
+    Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu', admin: 1)
+=======
+<<<<<<< HEAD
+    Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
+=======
+    Member.destroy_all
+    Event.destroy_all
+    Due.destroy_all
+    Attendance.destroy_all
+    Lineage.destroy_all
+    Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu')
+>>>>>>> 379f69c (Dummy Commit)
+>>>>>>> b180159 (Dummy Commit)
+=======
+    Member.delete_all
+    Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
+>>>>>>> f46c063 (Mail Buttons)
+>>>>>>> 7d0b316 (Mail Buttons)
     Rails.application.env_config['devise.mapping'] = Devise.mappings[:admin]
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_admin]
     # visit sign_in click_on "Sign in with Google"
@@ -21,7 +44,19 @@ RSpec.describe('Authentication', type: :feature) do
     end
   end
 
+<<<<<<< HEAD
   # Members Test
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+  # Members Test
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> f46c063 (Mail Buttons)
+  #Members Test
+>>>>>>> b180159 (Dummy Commit)
+>>>>>>> 7d0b316 (Mail Buttons)
   describe 'Creating Min Requirements for Member', type: :feature do
     it 'valid inputs' do
       visit new_member_path
@@ -84,9 +119,18 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'Delete Member', type: :feature do
     it 'valid inputs' do
+<<<<<<< HEAD
       Member.destroy_all
       test_member = Member.create!(fname: 'Victor', lname: 'Henry', joinDate: '01/01/2001', gradDate: '01/01/2010', email: 'JH@gmail.com', city: 'Austin', admin: 1, major: 'CS Major', active: 1)
+<<<<<<< HEAD
       Member.create!(fname: 'Admin', lname: 'Doe', joinDate: '01/01/2001', email: 'admindoe@tamu.edu', admin: 1)
+=======
+      Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu', admin: 1)
+=======
+      Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
+      test_member = Member.create!(fname: 'Victor', lname: 'Henry', joinDate: '01/01/2001', gradDate: "01/01/2010", email: "JH@gmail.com", city: "Austin", admin: 1, major: "CS Major", active: 1)
+>>>>>>> f46c063 (Mail Buttons)
+>>>>>>> 7d0b316 (Mail Buttons)
       visit members_path
       expect(page).to(have_content('Victor'))
       expect(page).to(have_content('Henry'))
