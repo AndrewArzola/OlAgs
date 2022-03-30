@@ -1,0 +1,26 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "37b815bd9d7daee76606fd3bdcd5ba23b93e5a2f75ed66b221fe6d62a0a61230",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/members_controller.rb",
+      "line": 78,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:member).permit(:fname, :lname, :joinDate, :gradDate, :email, :phoneNumber, :city, :major, :active, :admin)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MembersController",
+        "method": "member_params"
+      },
+      "user_input": ":admin",
+      "confidence": "High",
+      "note": "Customer requires that members who are admins can add other admins to the project"
+    }
+  ],
+  "updated": "2022-03-30 00:37:28 +0000",
+  "brakeman_version": "5.2.1"
+}
