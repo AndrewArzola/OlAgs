@@ -9,15 +9,16 @@ require 'rails_helper'
 OmniAuth.config.silence_get_warning = true
 RSpec.describe('Authentication', type: :feature) do
   before do
+    Admin.create_or_find_by!(full_name: 'check', email: 'JH@gmail.com')
     Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
     Rails.application.env_config['devise.mapping'] = Devise.mappings[:admin]
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_admin]
-    # visit new_admin_session_path click_on "Sign in with Google"
+    # visit sign_in click_on "Sign in with Google"
     visit admin_google_oauth2_omniauth_authorize_path
-    # Permission.create!(description: 'admin') if Permission.where(description: 'admin').first.nil?
-    # unless Admin.where(email: 'userdoe@example.com').first.nil? == false
-    #   Admin.create!(email: 'userdoe@example.com', full_name: 'User Doe', uid: '123456789', avatar_url: 'https://lh3.googleusercontent.com/url/photo.jpg')
-    # end
+    #Permission.create!(description: 'admin') if Permission.where(description: 'admin').first.nil?
+     unless Admin.where(email: 'userdoe@example.com').first.nil? == false
+       Admin.create!(email: 'userdoe@example.com', full_name: 'User Doe', uid: '123456789', avatar_url: 'https://lh3.googleusercontent.com/url/photo.jpg')
+    end
   end
 
   #Members Test
@@ -83,8 +84,8 @@ RSpec.describe('Authentication', type: :feature) do
   describe 'Delete Member', type: :feature do
     it 'valid inputs' do
       Member.destroy_all
-      Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
       test_member = Member.create!(fname: 'Victor', lname: 'Henry', joinDate: '01/01/2001', gradDate: "01/01/2010", email: "JH@gmail.com", city: "Austin", admin: 1, major: "CS Major", active: 1)
+      Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
       visit members_path
       expect(page).to have_content('Victor')
       expect(page).to have_content('Henry')
@@ -106,4 +107,249 @@ RSpec.describe('Authentication', type: :feature) do
       expect(page).not_to have_content('Victor')
     end
   end
+  describe 'Lineage one null node', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+
+      visit new_lineage_path
+      select 'John', :from => 'lineage_member_id', match: :first
+      select 'Tim', :from => 'lineage_father', match: :first
+      select 'None', :from => 'lineage_son', match: :first
+      click_on 'Submit'
+      visit lineages_path
+
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Tim'))
+    end
+  end
+
+  describe 'Lineage three diffrent member nodes', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com')
+
+      visit new_lineage_path
+      select 'John', :from => 'lineage_member_id', match: :first
+      select 'Tim', :from => 'lineage_father', match: :first
+      select 'Jade', :from => 'lineage_son', match: :first
+      click_on 'Submit'
+      visit lineages_path
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Tim'))
+      expect(page).to(have_content('Jade'))
+    end
+  end
+
+  describe 'edit', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember4 = Member.create!(fname: 'Slim', lname: 'Henry', email: 'JohnHenry@email.com')
+
+      testLineage = Lineage.create!(member_id: testMember1.id, father: testMember2.id, son: testMember3.id)
+      visit lineages_path
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Tim'))
+      expect(page).to(have_content('Jade'))
+
+      visit edit_lineage_path(id: testLineage.id)
+      select 'Slim', :from => 'lineage_member_id', match: :first
+      select 'John', :from => 'lineage_father', match: :first
+      click_on 'Submit'
+      visit lineages_path
+      expect(page).to(have_content('Slim'))
+      expect(page).not_to(have_content('Tim'))
+    end
+  end
+
+  describe 'Testing Delete', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com')
+
+      visit new_lineage_path
+      select 'John', :from => 'lineage_member_id', match: :first
+      select 'Tim', :from => 'lineage_father', match: :first
+      select 'Jade', :from => 'lineage_son', match: :first
+      click_on 'Submit'
+      visit lineages_path
+
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Tim'))
+      expect(page).to(have_content('Jade'))
+
+      click_on 'Destroy', match: :first
+
+      begin
+        page.driver.browser.switch_to.alert.accept
+      rescue StandardError
+        Selenium::WebDriver::Error::NoSuchAlertError
+      end
+
+      expect(page).not_to(have_content('John'))
+    end
+  end
+
+  #Attendance
+
+  describe 'rsvped and attended', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: "John", lname: "Henry", email: "JohnHenry@email.com", admin: 1)
+      testEvent1 = Event.create!(name: "Funeral", location: "Church", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+      visit new_attendance_path
+      # expect(page).to have_content('fesfesesfafesefaesfseafeff')
+      select "John", :from => "attendance_member_id", match: :first
+      select "Funeral", :from => "attendance_event_id", match: :first
+      check 'Rsvp'
+      check 'Attended'
+      click_on "Submit"
+      visit attendances_path
+      expect(page).to have_content('John')
+      expect(page).to have_content('Funeral')
+      expect(page).to have_content('true')
+      expect(page).to have_content('true')
+    end
+  end
+
+  describe 'no rsvp and attended', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: "John", lname: "Henry", email: "JohnHenry@email.com", admin: 1 )
+      testEvent1 = Event.create!(name: "Funeral", location: "Church", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+      visit new_attendance_path
+      select "John", :from => "attendance_member_id", match: :first
+      select "Funeral", :from => "attendance_event_id", match: :first
+      check 'Attended'
+      click_on "Submit"
+      visit attendances_path
+      expect(page).to have_content('John')
+      expect(page).to have_content('Funeral')
+      expect(page).to have_content('false')
+      expect(page).to have_content('true')
+    end
+  end
+
+  describe 'Member Name link', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: "John", lname: "Henry", email: "JohnHenry@email.com", admin: 1)
+      testMember2 = Member.create!(fname: "Jane", lname: "Doe", email: "JaneDoe@email.com", admin: 1)
+      testEvent1 = Event.create!(name: "Funeral", location: "Church", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+      testEvent2 = Event.create!(name: "Party", location: "MSC", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+      visit new_attendance_path
+      select "John", :from => "attendance_member_id", match: :first
+      select "Funeral", :from => "attendance_event_id", match: :first
+      check 'Rsvp'
+      check 'Attended'
+      click_on "Submit"
+      visit attendances_path
+      visit new_attendance_path
+      select "Jane", :from => "attendance_member_id", match: :first
+      select "Party", :from => "attendance_event_id", match: :first
+      check 'Rsvp'
+      check 'Attended'
+      click_on "Submit"
+      visit attendances_path
+      # click_link "Member Name"
+      expect(page).to have_content('John')
+      expect(page).to have_content('Jane')
+    end
+  end
+   # Due Test
+
+   describe 'paid', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testEvent1 = Event.create!(name: "Funeral", location: "Church", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+      visit new_due_path
+      select "John", :from => "due_member_id", match: :first
+      select "Funeral", :from => "due_event_id", match: :first
+      fill_in 'Amount',  with: 120
+      check 'Paid'
+      click_on "Submit"
+      visit dues_path
+      expect(page).to have_content('John')
+      expect(page).to have_content('Funeral')
+      expect(page).to have_content('120')
+      # expect(page).to have_content('true')
+    end
+  end
+
+  describe 'not paid', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testEvent1 = Event.create!(name: "Funeral", location: "Church", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+      visit new_due_path
+      select "John", :from => "due_member_id", match: :first
+      select "Funeral", :from => "due_event_id", match: :first
+      fill_in 'Amount',  with: 120
+      click_on "Submit"
+      visit dues_path
+      expect(page).to have_content('John')
+      expect(page).to have_content('Funeral')
+      expect(page).to have_content('120')
+      # expect(page).to have_content('false')
+    end
+  end
+
+  #Events
+  #2023-03-06 13:00:00 UTC
+  describe 'Event test 1', type: :feature do
+    it 'valid inputs' do
+      visit new_event_path
+      fill_in 'Name', with: 'Birthday'
+      fill_in 'Description', with: 'Celebration of the Presidents birthday'
+      fill_in 'Location', with: 'My House'
+      fill_in 'Start Time', with: DateTime.new(2023,3,3,17,0,0)
+      fill_in 'End Time', with: DateTime.new(2023,3,3,21,0,0)
+      click_on 'Submit'
+      expect(page).to(have_content('Birthday'))
+      expect(page).to(have_content('Celebration of the Presidents birthday'))
+      expect(page).to(have_content('My House'))
+      expect(page).to(have_content('03/03/2023 05:00PM'))
+      expect(page).to(have_content('03/03/2023 09:00PM'))
+    end
+  end
+
+  describe 'Delete Event', type: :feature do
+    it 'valid inputs' do
+        testEvent = Event.create!(name: 'Birthday', description: 'Celebration of the Presidents birthday', location: 'My House', start_time: '03/03/2023 9:00PM', end_time: '03/03/2023 11:00PM')
+        visit new_event_path
+        fill_in 'Name', with: 'Birthday'
+        fill_in 'Description', with: 'Celebration of the Presidents birthday'
+        fill_in 'Location', with: 'My House'
+        fill_in 'Start Time', with: DateTime.new(2023,3,3,21,0,0)
+        fill_in 'End Time', with: DateTime.new(2023,3,3,23,0,0)
+        click_on 'Submit'
+        expect(page).to(have_content('Birthday'))
+        expect(page).to(have_content('Celebration of the Presidents birthday'))
+        expect(page).to(have_content('My House'))
+        expect(page).to(have_content('03/03/2023 09:00PM'))
+        expect(page).to(have_content('03/03/2023 11:00PM'))
+        visit edit_event_path(id: testEvent.id)
+        click_on 'Remove Event'
+        testEvent.destroy
+    end
+  end
+
+  describe 'Edit Event', type: :feature do
+    it 'valid inputs' do
+        testEvent = Event.create(:name => 'Celebration', :description => 'Celebrating the welcoming of the new President', :location => 'My House', :start_time => '03/06/2023 4:00PM', :end_time => '03/06/2023 7:00PM')
+        visit edit_event_path(id: testEvent.id)
+        fill_in 'Name', with: 'Celebration'
+        fill_in 'Description', with: 'Celebrating the welcoming of the new President'
+        fill_in 'Location', with: 'My House'
+        fill_in 'Start Time', with: DateTime.new(2023,3,12,16,0,0)
+        fill_in 'End Time', with: DateTime.new(2023,3,12,19,0,0)
+        click_on 'Submit'
+        expect(page).to(have_content('Celebration'))
+        expect(page).to(have_content('Celebrating the welcoming of the new President'))
+        expect(page).to(have_content('My House'))
+        expect(page).to(have_content('03/12/2023 04:00PM'))
+        expect(page).to(have_content('03/12/2023 07:00PM'))
+    end
+  end
+
 end

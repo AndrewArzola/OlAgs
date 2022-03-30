@@ -7,8 +7,17 @@ class MembersController < ApplicationController
   def index
     @q = Member.ransack(params[:q])
     @members = @q.result(distinct: true)
+    @cmember = Member.find_by(:email =>current_admin.email)
+    if @cmember != nil
+      if @cmember.admin != nil
+          @admin= @cmember.admin
+      else
+        @admin = false
+      end
+    else
+      @admin = false
+    end
   end
-
   # GET /members/1 or /members/1.json
   def show; end
 
