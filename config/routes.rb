@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :calendar, only: [:show],controller: :calendar
   
   #root "members#index"
-  
+  get '/events/toggle/:id', :to => "events#toggle"
   get "/members/:id" , to: "members#show"
   get "/lineages/:id" , to: "lineages#show"
   resources :members, :lineages, :events

@@ -23,6 +23,11 @@
   <%= @event.end_time.strftime("%m/%d/%Y %I:%M%p") %>
 </p>
 
+<%= button_to '<' ,{:controller => 'attendances', :action => 'create', :member_id => Member.find_by(:email =>current_admin.email).id, :event_id => @event.id, :attended => "false", :rsvp => "true" }, {:method => :post} %>
+
+
+<%= link_to "RSVP to This Event", {:action => :toggle, :id => @event.id }, class:"btn btn-outline-dark btn-sm" %>
+
 <br><br>
 
 <p>
