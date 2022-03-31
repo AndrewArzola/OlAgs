@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+  <p> Please fill out the lineage starting at the newest member to the oldest member. </p>
   <div class="field form-group">
     <Label class="form-label"> <%= form.label :member_id, "Member" %> </label>
     <%= collection_select( :lineage, :member_id, Member.all, :id, :full_name, {}, { :multiple => false}) %>

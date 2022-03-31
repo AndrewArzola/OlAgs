@@ -1,22 +1,29 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Lineages</h1>
-<div class="container">
+<div class="container Flipped">
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive fixed-table-body">
-        <% @lineages.where(father: nil).each do |h|%>
-          <div class="col-md-4 col-sm-6">
-          <%= Member.where(id: h.member_id).last.fname + " " + Member.where(id: h.member_id).last.lname%> <br>
-          <div class="vl"></div>
-          <% son = h.son%>
-          <%while son!= nil%>
-            <%= Member.where(id: son).last.fname + " " + Member.where(id: son).last.lname%> <br>
-            <div class="vl"></div>
-            <%son = @lineages.where(member_id: son).last.son%>
-          <%end%>
+        <div class="Content">
+          <div class="row align-items-start flex-nowrap">
+            <% @lineages.where(father: nil).each do |h|%>
+              <div class="col-auto box">
+                <h4 >
+                  <%= Member.where(id: h.member_id).last.fname + " " + Member.where(id: h.member_id).last.lname%>
+                </h4>
+                <% son = h.son%>
+                <%while son!= nil%>
+                  <div class="vl"></div>
+                  <h4 >
+                    <%= Member.where(id: son).last.fname + " " + Member.where(id: son).last.lname%>
+                  </h4>
+                  <%son = @lineages.where(member_id: son).last.son%>
+                <%end%>
+              </div>
+            <%end%>
           </div>
-        <%end%>
+        </div>
       </div>
     </div>
   </div>
