@@ -62,4 +62,17 @@ div.actions {
   list-style: square; }
 
 label {
-  display: block; }
+  display: block; 
+}
+// Custom Scrollbar
+  ::-webkit-scrollbar{
+    width: 12px;
+}
+::-webkit-scrollbar-track{
+    background: linear-gradient(to bottom right, #b9b8b8, #8a8888);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background: linear-gradient(to bottom right, #003366, #0b549c);
+}
