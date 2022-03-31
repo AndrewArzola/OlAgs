@@ -39,6 +39,7 @@ RSpec.describe(Member, type: :model) do
     expect(subject).to(be_valid)
   end
 end
+
 RSpec.describe(Lineage, type: :model) do
   testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
   testMember2 = Member.create!(fname: 'Red', lname: 'Henry', email: 'JohnHenry@email.com')
@@ -92,13 +93,12 @@ RSpec.describe(Lineage, type: :model) do
   end
 end
 
-
 RSpec.describe(Attendance, type: :model) do
-  testMember1 = Member.create!(fname: "John", lname: "Henry", email: "JohnHenry@email.com")
-  testEvent1 = Event.create!(name: "Funeral", location: "Church", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+  testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
+  testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
 
   subject do
-    described_class.new(member_id: testMember1.id, event_id: testEvent1.id, rsvp: "false", attended: "false")
+    described_class.new(member_id: testMember1.id, event_id: testEvent1.id, rsvp: 'false', attended: 'false')
   end
 
   it 'No RSVP and no Attended' do
@@ -106,22 +106,22 @@ RSpec.describe(Attendance, type: :model) do
   end
 
   it 'RSVP' do
-    subject.rsvp = "true"
+    subject.rsvp = 'true'
     expect(subject).to(be_valid)
   end
 
   it 'Attended' do
-    subject.attended = "true"
+    subject.attended = 'true'
     expect(subject).to(be_valid)
   end
 end
 
 RSpec.describe(Due, type: :model) do
-  testMember1 = Member.create!(fname: "John", lname: "Henry", email: "JohnHenry@email.com")
-  testEvent1 = Event.create!(name: "Funeral", location: "Church", start_time: "03/03/2099 10:00PM", end_time: "03/03/2099 11:00PM", description: "N/A")
+  testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
+  testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
 
   subject do
-    described_class.new(member_id: testMember1.id, event_id: testEvent1.id, dueAmount: "0", paid: "false")
+    described_class.new(member_id: testMember1.id, event_id: testEvent1.id, dueAmount: '0', paid: 'false')
   end
 
   it 'All initializations done correctly' do
@@ -129,18 +129,18 @@ RSpec.describe(Due, type: :model) do
   end
 
   it 'Paid' do
-    subject.paid = "true"
+    subject.paid = 'true'
     expect(subject).to(be_valid)
   end
 
   it 'Due amount with decimal' do
-    subject.dueAmount = "120.99"
+    subject.dueAmount = '120.99'
     expect(subject).to(be_valid)
   end
 end
 
 RSpec.describe(Event, type: :model) do
-  testEvent = Event.create(:name => 'Celebration', :description => 'Celebrating the welcoming of the new President', :location => 'My House', :start_time => '03/06/2023 4:00PM', :end_time => '03/06/2023 7:00PM')
+  testEvent = Event.create(name: 'Celebration', description: 'Celebrating the welcoming of the new President', location: 'My House', start_time: '03/06/2023 4:00PM', end_time: '03/06/2023 7:00PM')
 
   it 'is valid with valid attributes' do
     expect(testEvent).to(be_valid)
@@ -155,5 +155,3 @@ RSpec.describe(Event, type: :model) do
     expect(subject).not_to(be_valid)
   end
 end
-
-

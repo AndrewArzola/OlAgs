@@ -54,6 +54,6 @@
 </div>
 
 <br>
-<% if Member.find_by(:email =>current_admin.email).admin? %>
+<% if @admin %>
   <%= link_to 'New Member', new_member_path, class:"btn btn-outline-dark btn-sm" %>
 <%end %>
