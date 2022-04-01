@@ -15,45 +15,55 @@
                 <% son = h.son%>
                 <%while son!= nil%>
                   <div class="vl"></div>
-                  <h4 >
+                  <h4>
                     <%= Member.where(id: son).last.fname + " " + Member.where(id: son).last.lname%>
                   </h4>
-                  <%son = @lineages.where(member_id: son).last.son%>
+                  <%son = Lineage.where(member_id: son).last%>
+                  <%if son != nil%>
+                    <%  son = son.son%>
+                  <%end%>
                 <%end%>
               </div>
-            <%end%>
+            <%end%> 
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<table>
-  <thead>
-    <tr>
-      <th>Member</th>
-      <th>Father</th>
-      <th>Son</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @lineages.each do |lineage| %>
-      <tr>
-        <td><%= link_to Member.where(id: lineage.member_id).last.fname, member_path(lineage.member_id)%></td>
-        <td><%= link_to(lineage.name_check(lineage.father))%></td>
-        <td><%= link_to(lineage.name_check(lineage.son))%></td>
-        <td><%= link_to 'Show', lineage %></td>
-        <td><%= link_to 'Edit', edit_lineage_path(lineage) %></td>
-        <td><%= link_to 'Destroy', lineage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-<br>
+<br><br>
 <% if Member.find_by(:email =>current_admin.email).admin? %>
+<h2>    Admin Panel</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive fixed-table-body">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr class="table-light"> 
+                <th>Member</th>
+                <th>Father</th>
+                <th>Son</th>
+                <th colspan="3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @lineages.each do |lineage| %>
+                <tr>
+                  <td><%= link_to Member.where(id: lineage.member_id).last.fname, member_path(lineage.member_id)%></td>
+                  <td><%= link_to(lineage.name_check(lineage.father))%></td>
+                  <td><%= link_to(lineage.name_check(lineage.son))%></td>
+                  <td><%= link_to 'Show', lineage %></td>
+                  <td><%= link_to 'Edit', edit_lineage_path(lineage) %></td>
+                  <td><%= link_to 'Destroy', lineage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
   <%= link_to 'New Lineage', new_lineage_path, class:"btn btn-outline-dark btn-sm" %>
 <%end %>
