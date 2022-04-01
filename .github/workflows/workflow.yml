@@ -61,6 +61,9 @@ jobs:
         with:
           name: brakeman-report.txt
           path: brakeman.txt
+      - name: cleanup #https://github.com/actions/checkout/issues/211
+      run: |
+        sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.0.0
         with:
