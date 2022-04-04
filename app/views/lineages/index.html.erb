@@ -10,15 +10,13 @@
             <%@lineages.where(father: nil).sort_by{|h| Member.where(id: h.member_id).last.joinDate}.each do |h|%>
               <div class="col-auto box">
                 <h4 >
-                  <%= link_to Member.where(id: h.member_id).last.fname, member_path(h.member_id) + " " %>
-                  <%= link_to Member.where(id: h.member_id).last.lname, member_path(h.member_id)%>
+                  <%= link_to Member.where(id: h.member_id).last.fname + " " + Member.where(id: h.member_id).last.lname, member_path(h.member_id)%>
                 </h4>
                 <% son = h.son%>
                 <%while son!= nil%>
                   <div class="vl"></div>
                   <h4>
-                    <%= link_to Member.where(id: son).last.fname, member_path(h.member_id) + " " %>
-                    <%= link_to Member.where(id: son).last.lname, member_path(h.member_id)%>
+                    <%= link_to Member.where(id: son).last.fname + " " + Member.where(id: son).last.lname, member_path(son)%>
                   </h4>
                   <%son = Lineage.where(member_id: son).last%>
                   <%if son != nil%>
