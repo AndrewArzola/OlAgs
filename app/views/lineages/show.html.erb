@@ -3,18 +3,18 @@
 <p>
   <strong>Member:</strong>
     
-    <%=@lineage.member_id%>
+    <%=Member.where(id: @lineage.member_id).last.fname%>
 </p>
 
 <p>
   <strong>Father:</strong>
   
-  <%=@lineage.father%>
+  <%=@lineage.name_check(@lineage.father)%>
 </p>
 
 <p>
   <strong>Son:</strong>
-  <%=@lineage.son%>
+  <%=@lineage.name_check(@lineage.son)%>
 </p>
 
 <% if Member.find_by(:email =>current_admin.email).admin? %>
