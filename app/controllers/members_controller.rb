@@ -7,6 +7,17 @@ class MembersController < ApplicationController
   def index
     @q = Member.ransack(params[:q])
     @members = @q.result(distinct: true)
+    @cmember = Member.find_by(email: current_admin.email)
+    @admin = if @cmember.nil?
+               false
+             elsif !@cmember.admin.nil?
+               @cmember.admin
+             end
+    @active = if @cmember.nil?
+                false
+              elsif !@cmember.active.nil?
+                @cmember.active
+              end
   end
 
   # GET /members/1 or /members/1.json
@@ -66,6 +77,6 @@ class MembersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def member_params
-    params.require(:member).permit(:fname, :lname, :joinDate, :gradDate, :email, :phoneNumber, :city, :admin, :major, :active)
+    params.require(:member).permit(:fname, :lname, :joinDate, :gradDate, :email, :phoneNumber, :city, :major, :active, :admin)
   end
 end

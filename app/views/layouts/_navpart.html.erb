@@ -11,18 +11,22 @@
           <li class="nav-item">
             <%= link_to "Members", members_path, class:" nav-link" %>
           </li>
+          <% if Member.find_by(:email =>current_admin.email).active? || Member.find_by(:email =>current_admin.email).admin? %>
           <li class="nav-item">
             <%= link_to "Events", events_path, class:" nav-link" %>
           </li>
+          <% end %>
           <li class="nav-item">
             <%= link_to "Lineages", lineages_path, class:"nav-link" %>
           </li>
+          <% if Member.find_by(:email =>current_admin.email).active? || Member.find_by(:email =>current_admin.email).admin? %>
           <li class="nav-item">
             <%= link_to "Dues", dues_path, class:"nav-link" %>
           </li>
           <li class="nav-item">
             <%= link_to "Attendance", attendances_path, class:"nav-link" %>
           </li>
+          <% end %>
           <% if Member.find_by(:email =>current_admin.email).admin? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
