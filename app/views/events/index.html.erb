@@ -1,22 +1,27 @@
 <p id="notice"><%= notice %></p>
+<% if Member.find_by(:email =>current_admin.email).active? == false && Member.find_by(:email =>current_admin.email).admin? == false %>
+status: 403 'Forbidden'
+<% else %>
+  <h1>Events</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive fixed-table-body">
+          <th>Calendar View</th>
 
-<h1>Events</h1>
-<div class="container">
-  <div class="row">
-    <div class="col-md-auto">
-      <div class="table-responsive fixed-table-body">
-        <h5>Calendar</h5>
-        <%= month_calendar(events: @events) do |date, events| %>
-          <%= date.strftime("%m/%d") %>
-          <% events.each do |event| %>
-            <div>
-              <%= event.name %>
-              <%= "@"%>
-              <%= event.start_time.strftime("%I:%M%p")%>
-              <%= link_to "Details", event%>
-            </div>
+          <%= month_calendar(events: @events) do |date, events| %>
+            <%= date.strftime("%m/%d") %>
+
+            <% events.each do |event | %>
+              <div>
+                <%= event.name %>
+                <%= "@"%>
+                <%= event.start_time.strftime("%I:%M%p")%>
+                <%= link_to "Details", event%>
+              </div>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>

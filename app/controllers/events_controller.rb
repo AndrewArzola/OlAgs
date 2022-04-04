@@ -86,7 +86,7 @@ class EventsController < ApplicationController
   end
 
   def start_time
-    self.event.time
+    event.time
   end
 
   private
@@ -100,5 +100,4 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:name, :description, :location, :start_time, :end_time)
   end
-
 end

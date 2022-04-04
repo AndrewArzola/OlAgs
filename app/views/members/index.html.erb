@@ -18,7 +18,7 @@
               <th>Major</th>
               <th>Active</th>
               <%# Hidden to Members %>
-              <% if Member.find_by(:email =>current_admin.email).admin? %>
+              <% if @admin %>
                 <th>Phone Number</th>
                 <th>Admin</th>
                 <th>Attendance Percentage</th>
@@ -38,7 +38,7 @@
                 <td><%= member.major %></td>
                 <td><%= member.active %></td>
                 <%# Hidden to Members %>
-                <% if Member.find_by(:email =>current_admin.email).admin? %>
+                <% if @admin %>
                   <td><%= member.phoneNumber %></td>
                   <td><%= member.admin %></td>
                   <% if Event.all.count > 0 %>
@@ -60,6 +60,6 @@
 </div>
 
 <br>
-<% if Member.find_by(:email =>current_admin.email).admin? %>
+<% if @admin %>
   <%= link_to 'New Member', new_member_path, class:"btn btn-outline-dark btn-sm" %>
 <%end %>
