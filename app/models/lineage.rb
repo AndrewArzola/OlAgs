@@ -3,11 +3,12 @@
 class Lineage < ApplicationRecord
   include ActionView::Helpers::UrlHelper
   belongs_to :member
-  rubocop:disable Rails/UniqueValidationWithoutIndex
+  # rubocop:disable Rails/UniqueValidationWithoutIndex
   validates :member_id, uniqueness: { scope: :member_id }
   validates :father, uniqueness: { scope: :father }, unless: Proc.new { |b| b.father.blank? }
   validates :son, uniqueness: { scope: :son }, unless: Proc.new { |b| b.son.blank? }
   validate :check_equality
+  # rubocop:enable Rails/UniqueValidationWithoutIndex
 
   def check_equality
     errors.add(:son, ": Big and Little can't be the same") if father == son && (!son.blank? && !father.blank?)
