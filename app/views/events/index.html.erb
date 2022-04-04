@@ -2,75 +2,68 @@
 <% if Member.find_by(:email =>current_admin.email).active? == false && Member.find_by(:email =>current_admin.email).admin? == false %>
 status: 403 'Forbidden'
 <% else %>
-  <h1>Events</h1>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="table-responsive fixed-table-body">
-          <th>Calendar View</th>
-
-          <%= month_calendar(events: @events) do |date, events| %>
-            <%= date.strftime("%m/%d") %>
-
-            <% events.each do |event | %>
-              <div>
-                <%= event.name %>
-                <%= "@"%>
-                <%= event.start_time.strftime("%I:%M%p")%>
-                <%= link_to "Details", event%>
-              </div>
-            <% end %>
+<h1>Events</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive fixed-table-body">
+        <h5>Calendar</h5>
+        <%= month_calendar(events: @events) do |date, events| %>
+          <%= date.strftime("%m/%d") %>
+          <% events.each do |event| %>
+            <div>
+              <%= event.name %>
+              <%= "@"%>
+              <%= event.start_time.strftime("%I:%M%p")%>
+              <%= link_to "Details", event%>
+            </div>
           <% end %>
-        </div>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
 <br>
-<div class="container">
-  <div class ="row">
-    <div class="col-md-auto">
-      <div>
-        <h5>Current Events</h5>
-          <% @events.each do |event| %>
-            <% if event.start_time < DateTime.current-5.hours %>
-              <% if event.end_time > DateTime.current-5.hours %>
-                <div>
-                  <td><%= event.name %></td>
-                  <%= link_to "Details", event%>
-                </div>
-              <% end%>
-            <% end%>
-          <% end %>
-      </div>
-    </div>
-    <div class="col-md-auto">
-      <div>
-        <div>
-          <h5>Upcoming Events</h5>
-          <% @events.each do |event| %>
-            <% if event.start_time  > DateTime.current-5.hours%>
+<div class ="row">
+  <div class="col-md-4 col-sm-6">
+    <div class="table-responsive fixed-table-body">
+      <h5>Current Events</h5>
+        <% @events.each do |event| %>
+          <% if event.start_time < DateTime.current-5.hours %>
+            <% if event.end_time > DateTime.current-5.hours %>
               <div>
                 <td><%= event.name %></td>
                 <%= link_to "Details", event%>
               </div>
             <% end%>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-auto">
-      <div>
-        <h5>Past Events</h5>
-        <% @events.each do |event| %>
-          <% if event.end_time < DateTime.current-5.hours %>
-            <div>
-              <td><%= event.name %></td>
-              <%= link_to "Details", event%>
-            </div>
           <% end%>
         <% end %>
-      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <div class="table-responsive fixed-table-body">
+      <h5>Upcoming Events</h5>
+      <% @events.each do |event| %>
+        <% if event.start_time  > DateTime.current-5.hours%>
+          <div>
+            <td><%= event.name %></td>
+            <%= link_to "Details", event%>
+          </div>
+        <% end%>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <div class="table-responsive fixed-table-body">
+      <h5>Past Events</h5>
+      <% @events.each do |event| %>
+        <% if event.end_time < DateTime.current-5.hours %>
+          <div>
+            <td><%= event.name %></td>
+            <%= link_to "Details", event%>
+          </div>
+        <% end%>
+      <% end %>
     </div>
   </div>
 </div>
@@ -79,4 +72,5 @@ status: 403 'Forbidden'
 <br>
 <% if Member.find_by(:email =>current_admin.email).admin? %>
   <%= link_to 'Add New Event', new_event_path, class:"btn btn-outline-dark btn-sm" %>
+<%end %>
 <%end %>
