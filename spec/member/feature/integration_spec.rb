@@ -15,6 +15,7 @@ RSpec.describe('Authentication', type: :feature) do
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     Admin.create_or_find_by!(full_name: 'check', email: 'JH@gmail.com')
     Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu', admin: 1)
 =======
@@ -31,6 +32,8 @@ RSpec.describe('Authentication', type: :feature) do
 >>>>>>> b180159 (Dummy Commit)
 =======
     Member.delete_all
+=======
+>>>>>>> 44e7858 (dummy)
     Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
 >>>>>>> f46c063 (Mail Buttons)
 >>>>>>> 7d0b316 (Mail Buttons)
@@ -117,6 +120,7 @@ RSpec.describe('Authentication', type: :feature) do
     end
   end
 
+<<<<<<< HEAD
   describe 'Delete Member', type: :feature do
     it 'valid inputs' do
 <<<<<<< HEAD
@@ -142,13 +146,31 @@ RSpec.describe('Authentication', type: :feature) do
       expect(page).to(have_content('CS Major'))
       expect(page).to(have_content('true'))
       click_on 'Destroy', match: :first
+=======
+  # describe 'Delete Member', type: :feature do
+  #   it 'valid inputs' do
+  #     Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu',  admin: 1)
+  #     test_member = Member.create!(fname: 'Victor', lname: 'Henry', joinDate: '01/01/2001', gradDate: "01/01/2010", email: "JH@gmail.com", city: "Austin", admin: 1, major: "CS Major", active: 1)
+  #     visit members_path
+  #     expect(page).to have_content('Victor')
+  #     expect(page).to have_content('Henry')
+  #     expect(page).to have_content('JH@gmail.com')
+  #     expect(page).to have_content('2001-01-01')
+  #     expect(page).to have_content('2010-01-01')
+  #     expect(page).to have_content('Austin')
+  #     expect(page).to have_content('true')
+  #     expect(page).to have_content('CS Major')
+  #     expect(page).to have_content('true')
+  #     click_on 'Destroy', match: :first
+>>>>>>> 44e7858 (dummy)
 
-      begin
-        page.driver.browser.switch_to.alert.accept
-      rescue StandardError
-        Selenium::WebDriver::Error::NoSuchAlertError
-      end
+  #     begin
+  #       page.driver.browser.switch_to.alert.accept
+  #     rescue StandardError
+  #       Selenium::WebDriver::Error::NoSuchAlertError
+  #     end
 
+<<<<<<< HEAD
       expect(page).not_to(have_content('Victor'))
     end
   end
@@ -398,4 +420,9 @@ RSpec.describe('Authentication', type: :feature) do
       expect(page).to(have_content('03/12/2023 07:00PM'))
     end
   end
+=======
+  #     expect(page).not_to have_content('Victor')
+  #   end
+  # end
+>>>>>>> 44e7858 (dummy)
 end
