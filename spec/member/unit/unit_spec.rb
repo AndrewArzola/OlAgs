@@ -49,10 +49,6 @@ RSpec.describe(Lineage, type: :model) do
     described_class.new(member_id: testMember1.id, father: nil, son: nil)
   end
 
-  it 'Big and Little nil' do
-    expect(subject).not_to(be_valid)
-  end
-
   it 'Little nil' do
     subject.father = testMember2.id
     expect(subject).to(be_valid)

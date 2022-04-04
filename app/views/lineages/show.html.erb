@@ -2,20 +2,24 @@
 
 <p>
   <strong>Member:</strong>
-  <%= @lineage.member_id %>
+    
+    <%=Member.where(id: @lineage.member_id).last.fname%>
 </p>
 
 <p>
   <strong>Father:</strong>
-  <%= @lineage.father %>
+  
+  <%=@lineage.name_check(@lineage.father)%>
 </p>
 
 <p>
   <strong>Son:</strong>
-  <%= @lineage.son %>
+  <%=@lineage.name_check(@lineage.son)%>
 </p>
 
-<%= link_to 'Delete', @lineage, class:"btn btn-outline-dark btn-sm", method: :delete, data: { confirm: 'Are you sure?' } %>
-<br><br>
-<%= link_to 'Edit', edit_lineage_path(@lineage), class:"btn btn-outline-dark btn-sm" %>
+<% if Member.find_by(:email =>current_admin.email).admin? %>
+  <%= link_to 'Delete', @lineage, class:"btn btn-outline-dark btn-sm", method: :delete, data: { confirm: 'Are you sure?' } %>
+  <br><br>
+  <%= link_to 'Edit', edit_lineage_path(@lineage), class:"btn btn-outline-dark btn-sm" %>
+<%end%>
 <%= link_to 'Back', lineages_path, class:"btn btn-outline-dark btn-sm" %>

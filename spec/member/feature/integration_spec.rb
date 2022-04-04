@@ -107,7 +107,8 @@ RSpec.describe('Authentication', type: :feature) do
       expect(page).not_to(have_content('Victor'))
     end
   end
-
+  
+  #Lineage Test
   describe 'Lineage one null node', type: :feature do
     it 'valid inputs' do
       testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)

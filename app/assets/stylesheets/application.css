@@ -31,8 +31,25 @@
     color: #ffffff;
     background: #2876c5;
 }
-
-
+/* Custom Scrollbar */
+  ::-webkit-scrollbar{
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track{
+    background: linear-gradient(to bottom right, #b9b8b8, #8a8888);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background: linear-gradient(to bottom right, #003366, #0b549c);
+}
+::-webkit-scrollbar-thumb:hover{
+    background: #555;
+}
+.Flipped, .Flipped .Content{
+    transform: rotateX(180deg);
+}
 
 
 /* change the brand(OlAgs) and text color */
