@@ -3,14 +3,12 @@
 <h1>Events</h1>
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-auto">
       <div class="table-responsive fixed-table-body">
-        <th>Calendar View</th>
-
+        <h5>Calendar</h5>
         <%= month_calendar(events: @events) do |date, events| %>
           <%= date.strftime("%m/%d") %>
-
-          <% events.each do |event | %>
+          <% events.each do |event| %>
             <div>
               <%= event.name %>
               <%= "@"%>
@@ -23,7 +21,56 @@
     </div>
   </div>
 </div>
-      
+<br>
+<div class="container">
+  <div class ="row">
+    <div class="col-md-auto">
+      <div>
+        <h5>Current Events</h5>
+          <% @events.each do |event| %>
+            <% if event.start_time < DateTime.current-5.hours %>
+              <% if event.end_time > DateTime.current-5.hours %>
+                <div>
+                  <td><%= event.name %></td>
+                  <%= link_to "Details", event%>
+                </div>
+              <% end%>
+            <% end%>
+          <% end %>
+      </div>
+    </div>
+    <div class="col-md-auto">
+      <div>
+        <div>
+          <h5>Upcoming Events</h5>
+          <% @events.each do |event| %>
+            <% if event.start_time  > DateTime.current-5.hours%>
+              <div>
+                <td><%= event.name %></td>
+                <%= link_to "Details", event%>
+              </div>
+            <% end%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-auto">
+      <div>
+        <h5>Past Events</h5>
+        <% @events.each do |event| %>
+          <% if event.end_time < DateTime.current-5.hours %>
+            <div>
+              <td><%= event.name %></td>
+              <%= link_to "Details", event%>
+            </div>
+          <% end%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <br>
 <% if Member.find_by(:email =>current_admin.email).admin? %>
   <%= link_to 'Add New Event', new_event_path, class:"btn btn-outline-dark btn-sm" %>

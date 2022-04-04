@@ -23,7 +23,12 @@
   <%= @event.end_time.strftime("%m/%d/%Y %I:%M%p") %>
 </p>
 
-<%= link_to "RSVP to This Event", {:action => :toggle, :id => @event.id }, class:"btn btn-outline-dark btn-sm" %>
+<% if @attendance.nil? %>
+  <%= link_to "RSVP to This Event", {:action => :RSVP , :id => @event.id }, class:"btn btn-outline-dark btn-sm" %>
+
+<% else %>
+  <%= link_to "UNRSVP From This Event", {:action => :UNRSVP, :id => @event.id }, class:"btn btn-outline-dark btn-sm" %>
+<% end %>
 
 <br><br>
 
