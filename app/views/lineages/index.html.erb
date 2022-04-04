@@ -17,8 +17,8 @@
                 <%while son!= nil%>
                   <div class="vl"></div>
                   <h4>
-                    <%= link_to Member.where(id: son).last.fname, member_path(h.member_id) + " " %>
-                    <%= link_to Member.where(id: son).last.lname, member_path(h.member_id)%>
+                    <%= link_to Member.where(id: son).last.fname, member_path(h.son) + " " %>
+                    <%= link_to Member.where(id: son).last.lname, member_path(h.son)%>
                   </h4>
                   <%son = Lineage.where(member_id: son).last%>
                   <%if son != nil%>
