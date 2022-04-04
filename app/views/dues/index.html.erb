@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-
+<% if Member.find_by(:email =>current_admin.email).active? == false && Member.find_by(:email =>current_admin.email).admin? == false %>
+status: 403 'Forbidden'
+<% else %>
 <h1>Dues</h1>
 <% if Member.find_by(:email =>current_admin.email).admin? %>
   <%= Due.new.due_mail%>
@@ -8,44 +10,44 @@
 <%end%>
 <%= render 'dues/search_form.html.erb' %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="table-responsive fixed-table-body">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Member</th>
-              <th>Event</th>
-              <th>Due Amount</th>
-              <th>Paid</th>
-              <th colspan="3"></th>
-            </tr>
-          </thead>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive fixed-table-body">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Event</th>
+                <th>Due Amount</th>
+                <th>Paid</th>
+                <th colspan="3"></th>
+              </tr>
+            </thead>
 
-          <tbody>
-            <% @dues.each do |due| %>
-              <% if due.member_id == Member.find_by(:email => current_admin.email).id || Member.find_by(:email =>current_admin.email).admin?%>
-                <tr>
-                  <td><%= Member.where(id: due.member_id).last.fname %></td>
-                  <td><%= Event.where(id: due.event_id).last.name %></td>
-                  <td><%= due.dueAmount %></td>
-                  <td><%= due.paid_show(due.paid?) %></td>
-                  <% if Member.find_by(:email =>current_admin.email).admin? %>
-                  <td><%= link_to 'Show', due %></td>
-                  <td><%= link_to 'Edit', edit_due_path(due) %></td>
-                  <td><%= link_to 'Destroy', due, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                  <%end %>
-                </tr>
+            <tbody>
+              <% @dues.each do |due| %>
+                <% if due.member_id == Member.find_by(:email => current_admin.email).id || Member.find_by(:email =>current_admin.email).admin?%>
+                  <tr>
+                    <td><%= Member.where(id: due.member_id).last.fname %></td>
+                    <td><%= Event.where(id: due.event_id).last.name %></td>
+                    <td><%= due.dueAmount %></td>
+                    <td><%= due.paid_show(due.paid?) %></td>
+                    <% if Member.find_by(:email =>current_admin.email).admin? %>
+                    <td><%= link_to 'Show', due %></td>
+                    <td><%= link_to 'Edit', edit_due_path(due) %></td>
+                    <td><%= link_to 'Destroy', due, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                    <%end %>
+                  </tr>
+                <% end %>
               <% end %>
-            <% end %>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
+<%end %>
 <br>
 <% if Member.find_by(:email =>current_admin.email).admin? %>
   <%= link_to 'New Due', new_due_path, class:"btn btn-outline-dark btn-sm" %>

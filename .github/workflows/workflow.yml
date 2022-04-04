@@ -61,10 +61,7 @@ jobs:
         with:
           name: brakeman-report.txt
           path: brakeman.txt
+      - name: cleanup #https://github.com/actions/checkout/issues/211
+        run: |
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.0.0
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "ol-ags-history"
-          heroku_email: "andrew.j.arzola@tamu.edu"
-          usedocker: true
