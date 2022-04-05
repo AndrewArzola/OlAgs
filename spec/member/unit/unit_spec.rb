@@ -29,7 +29,6 @@ RSpec.describe(Member, type: :model) do
   end
 
   it 'is valid without unnecessary attributes' do
-    subject.joinDate = nil
     subject.gradDate = nil
     subject.phoneNumber = nil
     subject.city = nil
@@ -41,9 +40,9 @@ RSpec.describe(Member, type: :model) do
 end
 
 RSpec.describe(Lineage, type: :model) do
-  testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
-  testMember2 = Member.create!(fname: 'Red', lname: 'Henry', email: 'JohnHenry@email.com')
-  testMember3 = Member.create!(fname: 'Ned', lname: 'Henry', email: 'JohnHenry@email.com')
+  testMember1 = Member.create!(fname: 'John', lname: 'Henry', joinDate: '01/01/2001', email: 'JohnHenry@email.com')
+  testMember2 = Member.create!(fname: 'Red', lname: 'Henry', joinDate: '01/01/2001', email: 'JohnHenry@email.com')
+  testMember3 = Member.create!(fname: 'Ned', lname: 'Henry', joinDate: '01/01/2001', email: 'JohnHenry@email.com')
 
   subject do
     described_class.new(member_id: testMember1.id, father: nil, son: nil)
@@ -90,7 +89,7 @@ RSpec.describe(Lineage, type: :model) do
 end
 
 RSpec.describe(Attendance, type: :model) do
-  testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
+  testMember1 = Member.create!(fname: 'John', lname: 'Henry', joinDate: '01/01/2001', email: 'JohnHenry@email.com')
   testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
 
   subject do
@@ -113,7 +112,7 @@ RSpec.describe(Attendance, type: :model) do
 end
 
 RSpec.describe(Due, type: :model) do
-  testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
+  testMember1 = Member.create!(fname: 'John', lname: 'Henry', joinDate: '01/01/2001', email: 'JohnHenry@email.com')
   testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
 
   subject do

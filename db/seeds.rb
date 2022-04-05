@@ -5,7 +5,7 @@ if Member.count.zero?
     {
       fname: 'Walter',
       lname: 'Ritchie',
-      joinDate: '2022-03-04',
+      joinDate: '01/01/2001',
       email: 'writchie3@tamu.edu',
       phoneNumber: '2148936415',
       city: 'College Station',
@@ -17,7 +17,7 @@ if Member.count.zero?
     {
       fname: 'CJ',
       lname: 'Sewell',
-      joinDate: '2020-03-04',
+      joinDate: '01/01/2002',
       email: 'c.j.sewell07@tamu.edu',
       phoneNumber: '',
       city: '',
@@ -29,7 +29,7 @@ if Member.count.zero?
     {
       fname: 'Anna',
       lname: 'Kolodziejcyk',
-      joinDate: '2018-03-04',
+      joinDate: '01/01/2003',
       email: 'akk962@tamu.edu',
       phoneNumber: '',
       city: '',
@@ -41,7 +41,7 @@ if Member.count.zero?
     {
       fname: 'Alex',
       lname: 'Torres',
-      joinDate: '2021-03-04',
+      joinDate: '01/01/2004',
       email: 'robincrass@tamu.edu',
       phoneNumber: '',
       city: '',
@@ -53,7 +53,7 @@ if Member.count.zero?
     {
       fname: 'Andrew',
       lname: 'Arzola',
-      joinDate: '2017-03-04',
+      joinDate: '01/01/2005',
       email: 'andrew.j.arzola@tamu.edu',
       phoneNumber: '',
       city: '',
