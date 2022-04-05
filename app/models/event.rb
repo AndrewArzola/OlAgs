@@ -1,17 +1,10 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-<<<<<<< HEAD
   has_many :attendance, dependent: :destroy
   has_many :due, dependent: :destroy
   validates :name, :description, :location, :start_time, :end_time, presence: true
   validate :start_greater_equal, :in_future
-=======
-    has_many :attendance, dependent: :destroy
-    has_many :due, dependent: :destroy
-    validates :name, :description, :location, :start_time, :end_time, presence: true
-    validate :start_greater_equal
->>>>>>> f46c063 (Mail Buttons)
 
   def start_greater_equal
     if start_time == end_time || start_time > end_time
@@ -24,7 +17,6 @@ class Event < ApplicationRecord
     end
   end
 
-<<<<<<< HEAD
   def in_future
     if start_time.nil?
       errors.add('requires start time')
@@ -36,14 +28,4 @@ class Event < ApplicationRecord
       errors.add(:end_time, 'must not have already passed')
     end
   end
-=======
-    # def inFuture
-    #     if start_time < DateTime.current-6.hours
-    #         errors.add(:start_time, 'must not have already passed')
-    #     end
-    #     if end_time < DateTime.current-6.hours
-    #         errors.add(:end_time, 'must not have already passed')
-    #     end
-    # end
->>>>>>> f46c063 (Mail Buttons)
 end
