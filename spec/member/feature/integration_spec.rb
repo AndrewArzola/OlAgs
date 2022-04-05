@@ -10,7 +10,7 @@ OmniAuth.config.silence_get_warning = true
 RSpec.describe('Authentication', type: :feature) do
   before do
     Admin.create_or_find_by!(full_name: 'check', email: 'JH@gmail.com')
-    Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu', admin: 1)
+    Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu', joinDate: '01/01/2001', admin: 1)
     Rails.application.env_config['devise.mapping'] = Devise.mappings[:admin]
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:google_admin]
     # visit sign_in click_on "Sign in with Google"
@@ -28,6 +28,7 @@ RSpec.describe('Authentication', type: :feature) do
       fill_in 'First Name', with: 'John'
       fill_in 'Last Name', with: 'Henry'
       fill_in 'Email Address', with: 'JH@gmail.com'
+      fill_in 'Join Date', with: '01/01/2001'
       click_on 'Submit'
       visit members_path
       expect(page).to(have_content('John'))
@@ -85,7 +86,7 @@ RSpec.describe('Authentication', type: :feature) do
     it 'valid inputs' do
       Member.destroy_all
       test_member = Member.create!(fname: 'Victor', lname: 'Henry', joinDate: '01/01/2001', gradDate: '01/01/2010', email: 'JH@gmail.com', city: 'Austin', admin: 1, major: 'CS Major', active: 1)
-      Member.create!(fname: 'Admin', lname: 'Doe', email: 'admindoe@tamu.edu', admin: 1)
+      Member.create!(fname: 'Admin', lname: 'Doe', joinDate: '01/01/2001', email: 'admindoe@tamu.edu', admin: 1)
       visit members_path
       expect(page).to(have_content('Victor'))
       expect(page).to(have_content('Henry'))
@@ -111,8 +112,8 @@ RSpec.describe('Authentication', type: :feature) do
   #Lineage Test
   describe 'Lineage one null node', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
-      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
 
       visit new_lineage_path
       select 'John', from: 'lineage_member_id', match: :first
@@ -128,9 +129,9 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'Lineage three diffrent member nodes', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
-      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com')
-      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
+      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001',)
 
       visit new_lineage_path
       select 'John', from: 'lineage_member_id', match: :first
@@ -146,10 +147,10 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'edit', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
-      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com')
-      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com')
-      testMember4 = Member.create!(fname: 'Slim', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
+      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
+      testMember4 = Member.create!(fname: 'Slim', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
 
       testLineage = Lineage.create!(member_id: testMember1.id, father: testMember2.id, son: testMember3.id)
       visit lineages_path
@@ -169,9 +170,9 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'Testing Delete', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com')
-      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com')
-      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com')
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
+      testMember2 = Member.create!(fname: 'Tim', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
+      testMember3 = Member.create!(fname: 'Jade', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001')
 
       visit new_lineage_path
       select 'John', from: 'lineage_member_id', match: :first
@@ -200,7 +201,7 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'rsvped and attended', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
       testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
       visit new_attendance_path
       # expect(page).to have_content('fesfesesfafesefaesfseafeff')
@@ -219,7 +220,7 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'no rsvp and attended', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
       testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
       visit new_attendance_path
       select 'John', from: 'attendance_member_id', match: :first
@@ -236,8 +237,8 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'Member Name link', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
-      testMember2 = Member.create!(fname: 'Jane', lname: 'Doe', email: 'JaneDoe@email.com', admin: 1)
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testMember2 = Member.create!(fname: 'Jane', lname: 'Doe', email: 'JaneDoe@email.com', joinDate: '01/01/2001', admin: 1)
       testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
       testEvent2 = Event.create!(name: 'Party', location: 'MSC', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
       visit new_attendance_path
@@ -263,7 +264,7 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'paid', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
       testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
       visit new_due_path
       select 'John', from: 'due_member_id', match: :first
@@ -281,7 +282,7 @@ RSpec.describe('Authentication', type: :feature) do
 
   describe 'not paid', type: :feature do
     it 'valid inputs' do
-      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', admin: 1)
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
       testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
       visit new_due_path
       select 'John', from: 'due_member_id', match: :first
