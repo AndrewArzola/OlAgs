@@ -27,5 +27,4 @@ class Due < ApplicationRecord
   ransacker :full_name do
     Arel.sql("CONCAT_WS(' | ', members.fname, members.lname)")
   end
-
 end

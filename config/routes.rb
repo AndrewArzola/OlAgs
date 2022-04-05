@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   
   #root "members#index"
   #get '/events/toggle/:id', :to => "events#toggle"
-  get '/events/RSVP/:id', :to => "events#RSVP"
-  get '/events/UNRSVP/:id', :to => "events#UNRSVP"
+  get '/events/rsvps/:id', :to => "events#rsvps"
+  get '/events/unrsvps/:id', :to => "events#unrsvps"
   get "/members/:id" , to: "members#show"
   get "/lineages/:id" , to: "lineages#show"
   resources :members, :lineages, :events

@@ -3,28 +3,28 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
 
-  def RSVP
-    @user = Member.find_by(:email =>current_admin.email).id
+  def rsvps
+    @user = Member.find_by(email: current_admin.email).id
     @event_id = params[:id]
-    @attendance = Attendance.where(:member_id => @user, :event_id => @event_id).first
+    @attendance = Attendance.where(member_id: @user, event_id: @event_id).first
     if @attendance.nil?
-      @attendance = Attendance.new(:member_id => @user, :event_id => @event_id, :attended => "false", :rsvp => "true")
-      @attendance.save
+      @attendance = Attendance.new(member_id: @user, event_id: @event_id, attended: 'false', rsvp: 'true')
+      @attendance.save!
     end
-    redirect_to "/events"
+    redirect_to('/events')
   end
 
-  def UNRSVP
-    @user = Member.find_by(:email =>current_admin.email).id
+  def unrsvps
+    @user = Member.find_by(email: current_admin.email).id
     @event_id = params[:id]
-    @attendance = Attendance.where(:member_id => @user, :event_id => @event_id).first
+    @attendance = Attendance.where(member_id: @user, event_id: @event_id).first
     if @attendance.nil?
-      @attendance = Attendance.new(:member_id => @user, :event_id => @event_id, :attended => "false", :rsvp => "false")
-      @attendance.save
+      @attendance = Attendance.new(member_id: @user, event_id: @event_id, attended: 'false', rsvp: 'false')
+      @attendance.save!
     else
       @attendance.destroy!
     end
-    redirect_to "/events"
+    redirect_to('/events')
   end
 
   # GET /events or /events.json
@@ -34,9 +34,9 @@ class EventsController < ApplicationController
 
   # GET /events/1 or /events/1.json
   def show
-    @user = Member.find_by(:email =>current_admin.email).id
+    @user = Member.find_by(email: current_admin.email).id
     @event_id = params[:id]
-    @attendance = Attendance.where(:member_id => @user, :event_id => @event_id).first
+    @attendance = Attendance.where(member_id: @user, event_id: @event_id).first
   end
 
   # GET /events/new
