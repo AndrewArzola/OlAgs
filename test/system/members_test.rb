@@ -3,7 +3,7 @@
 require 'application_system_test_case'
 
 class MembersTest < ApplicationSystemTestCase
-  setup do
+  before do
     @member = members(:one)
   end
 

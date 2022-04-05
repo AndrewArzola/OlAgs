@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 <h1>Members</h1>
 <%= Member.new.member_mail(@members)%>
+<br>
+<br>  
 <%= render 'members/search_form.html.erb' %>
 <div class="container">
   <div class="row">

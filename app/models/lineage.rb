@@ -16,13 +16,11 @@ class Lineage < ApplicationRecord
     errors.add(:member_id, ": Big can't be the same as member id") if father == member_id
   end
 
-  def name_check (attribute)
-    if Member.where(id: attribute).exists?
+  def name_check(attribute)
+    if Member.exists?(id: attribute)
       link_to(Member.where(id: attribute).last.fname, Rails.application.routes.url_helpers.member_path(attribute))
-    elsif attribute == self.father
-      "Head"
-    else
-      'Tail'
+    elsif attribute == father
+      'Head/Tail'
     end
   end
 end

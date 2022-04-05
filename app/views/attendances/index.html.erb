@@ -3,7 +3,9 @@
 status: 403 'Forbidden'
 <% else %>
   <h1>Attendances</h1>
-
+  <%= Attendance.new.attendance_mail(@attendances)%>
+  <br>
+  <br>  
   <%= render 'attendances/search_form.html.erb' %>
 
   <div class="container">
