@@ -25,7 +25,7 @@ status: 403 'Forbidden'
               <% @attendances.each do |attendance| %>
               <% if attendance.member_id == Member.find_by(:email => current_admin.email).id || Member.find_by(:email =>current_admin.email).admin?%>
                 <tr>
-                  <td><%= Member.where(id: attendance.member_id).last.fname %></td>
+                  <td><%= Member.where(id: attendance.member_id).last.fname %> <%= Member.where(id: attendance.member_id).last.lname %></td>
                   <td><%= Event.where(id: attendance.event_id).last.name %></td>
                   <td><%= attendance.attended %></td>
                   <td><%= attendance.rsvp %></td>
