@@ -15,12 +15,14 @@ Rails.application.routes.draw do
   resources :events
   resources :members
 
-  resources :calendar, only: [:show], controller: :calendar
-
-  # root "members#index"
-
-  get '/members/:id', to: 'members#show'
-  get '/lineages/:id', to: 'lineages#show'
+  resources :calendar, only: [:show],controller: :calendar
+  
+  #root "members#index"
+  #get '/events/toggle/:id', :to => "events#toggle"
+  get '/events/rsvps/:id', :to => "events#rsvps"
+  get '/events/unrsvps/:id', :to => "events#unrsvps"
+  get "/members/:id" , to: "members#show"
+  get "/lineages/:id" , to: "lineages#show"
   resources :members, :lineages, :events
   devise_for :admins, controllers: { omniauth_callbacks: 'admins/omniauth_callbacks' }
   devise_scope :admin do

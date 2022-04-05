@@ -3,13 +3,41 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[show edit update destroy]
 
+  def rsvps
+    @user = Member.find_by(email: current_admin.email).id
+    @event_id = params[:id]
+    @attendance = Attendance.where(member_id: @user, event_id: @event_id).first
+    if @attendance.nil?
+      @attendance = Attendance.new(member_id: @user, event_id: @event_id, attended: 'false', rsvp: 'true')
+      @attendance.save!
+    end
+    redirect_to('/events')
+  end
+
+  def unrsvps
+    @user = Member.find_by(email: current_admin.email).id
+    @event_id = params[:id]
+    @attendance = Attendance.where(member_id: @user, event_id: @event_id).first
+    if @attendance.nil?
+      @attendance = Attendance.new(member_id: @user, event_id: @event_id, attended: 'false', rsvp: 'false')
+      @attendance.save!
+    else
+      @attendance.destroy!
+    end
+    redirect_to('/events')
+  end
+
   # GET /events or /events.json
   def index
     @events = Event.all
   end
 
   # GET /events/1 or /events/1.json
-  def show; end
+  def show
+    @user = Member.find_by(email: current_admin.email).id
+    @event_id = params[:id]
+    @attendance = Attendance.where(member_id: @user, event_id: @event_id).first
+  end
 
   # GET /events/new
   def new
