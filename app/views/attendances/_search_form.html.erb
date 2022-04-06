@@ -3,20 +3,20 @@
     <div class="container">
     <div class="row justify-content-end">
       <div class="col">
-        <%= f.label :member_fname_cont %>
-        <%= f.search_field :member_fname_cont %>
+        <%= f.label :member_full_name_cont, "Member Name" %>
+        <%= f.search_field :member_full_name_cont %>
       </div>
       <div class="col">
-        <%= f.label :event_name_cont %>
+        <%= f.label :event_name_cont, "Event Name"%>
         <%= f.search_field :event_name_cont %>
       </div>
       <div class="col">
-          <%= f.label :attended_eq %>
-    <%= f.search_field :attended_eq %>
+          <%= f.label :attended_eq, "Attended" %>
+    <%= f.search_field :attended_eq, placeholder:"True/False"%>
       </div>
       <div class="col">    
-        <%= f.label :rsvp_eq %>
-        <%= f.search_field :rsvp_eq %>
+        <%= f.label :rsvp_eq, "RSVP" %>
+        <%= f.search_field :rsvp_eq, placeholder:"True/False" %>
       </div>
       <div class = "col">
         <%= f.submit %>

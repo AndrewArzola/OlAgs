@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
-
+<% if Member.find_by(:email =>current_admin.email).active? == false && Member.find_by(:email =>current_admin.email).admin? == false %>
+status: 403 'Forbidden'
+<% else %>
 <h1>Events</h1>
 <div class="container">
   <div class="row">
@@ -70,4 +72,5 @@
 <br>
 <% if Member.find_by(:email =>current_admin.email).admin? %>
   <%= link_to 'Add New Event', new_event_path, class:"btn btn-outline-dark btn-sm" %>
+<%end %>
 <%end %>
