@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class AttendancesControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @attendance = attendances(:one)
   end
 

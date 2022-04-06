@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# location: spec/feature/integration_spec.rb
 require 'rails_helper'
 
 # NOTE: Due to some error the tests work when the members folder is called but not when the rspec spec/

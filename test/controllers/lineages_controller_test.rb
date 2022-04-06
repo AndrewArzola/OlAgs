@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class LineagesControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @lineage = lineages(:one)
   end
 

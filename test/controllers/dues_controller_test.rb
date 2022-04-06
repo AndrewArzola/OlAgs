@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class DuesControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @due = dues(:one)
   end
 

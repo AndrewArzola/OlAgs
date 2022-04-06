@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class MembersControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @member = members(:one)
   end
 

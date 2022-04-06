@@ -3,7 +3,7 @@
 require 'application_system_test_case'
 
 class AttendancesTest < ApplicationSystemTestCase
-  setup do
+  before do
     @attendance = attendances(:one)
   end
 

@@ -20,9 +20,7 @@ class Lineage < ApplicationRecord
     if Member.exists?(id: attribute)
       link_to(Member.where(id: attribute).last.fname, Rails.application.routes.url_helpers.member_path(attribute))
     elsif attribute == father
-      'Head'
-    else
-      'Tail'
+      'Head/Tail'
     end
   end
 end
