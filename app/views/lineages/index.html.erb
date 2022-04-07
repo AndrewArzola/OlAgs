@@ -10,6 +10,7 @@
             <%@lineages.where(father: nil).sort_by{|h| Member.where(id: h.member_id).last.joinDate}.each do |h|%>
               <div class="col-auto box">
                 <h4 >
+                  <%=  Member.where(id: h.member_id).last.joinDate.year%><br><br>
                   <%= link_to Member.where(id: h.member_id).last.fname + " " + Member.where(id: h.member_id).last.lname, member_path(h.member_id)%>
                 </h4>
                 <% son = h.son%>
