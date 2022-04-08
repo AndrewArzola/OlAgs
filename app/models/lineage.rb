@@ -10,6 +10,7 @@ class Lineage < ApplicationRecord
   validate :check_equality
   # rubocop:enable Rails/UniqueValidationWithoutIndex
 
+
   def check_equality
     errors.add(:son, ": Big and Little can't be the same") if father == son && (son.present? && father.present?)
     errors.add(:member_id, ": Little can't be the same as member id") if son == member_id
