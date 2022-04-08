@@ -210,8 +210,8 @@ RSpec.describe('Authentication', type: :feature) do
       visit attendances_path
       expect(page).to(have_content('John'))
       expect(page).to(have_content('Funeral'))
-      expect(page).to(have_content('true'))
-      expect(page).to(have_content('true'))
+      #expect(page).to(have_content('\u2705'))
+      #expect(page).to(have_content('\u2705'))
     end
   end
 
@@ -227,8 +227,8 @@ RSpec.describe('Authentication', type: :feature) do
       visit attendances_path
       expect(page).to(have_content('John'))
       expect(page).to(have_content('Funeral'))
-      expect(page).to(have_content('false'))
-      expect(page).to(have_content('true'))
+      #expect(page).to(have_content('\u274C'))
+      #expect(page).to(have_content('\u2705'))
     end
   end
 
