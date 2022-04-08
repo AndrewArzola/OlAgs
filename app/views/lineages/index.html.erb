@@ -47,6 +47,7 @@
       <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body">
           <div class="table-responsive fixed-table-body">
+          <%= render 'lineages/search_form.html.erb' %>
             <table class="table table-striped table-hover">
               <thead>
                 <tr class="table-light"> 
@@ -57,7 +58,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @lineages.each do |lineage| %>
+                <% @lineages_search.each do |lineage| %>
                   <tr>
                     <td><%= link_to Member.where(id: lineage.member_id).last.fname, member_path(lineage.member_id)%></td>
                     <td><%= link_to(lineage.name_check(lineage.father))%></td>

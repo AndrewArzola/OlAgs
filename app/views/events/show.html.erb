@@ -27,7 +27,7 @@
   <%= link_to "RSVP to This Event", {:action => :rsvps , :id => @event.id }, class:"btn btn-outline-dark btn-sm" %>
 
 <% else %>
-  <%= link_to "UNRSVP From This Event", {:action => :unrsvps, :id => @event.id }, class:"btn btn-outline-dark btn-sm" %>
+  <%= link_to "Rescind RSVP to This Event", {:action => :unrsvps, :id => @event.id }, class:"btn btn-outline-dark btn-sm" %>
 <% end %>
 
 <br><br>

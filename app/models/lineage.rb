@@ -10,6 +10,10 @@ class Lineage < ApplicationRecord
   validate :check_equality
   # rubocop:enable Rails/UniqueValidationWithoutIndex
 
+  ransacker :full_name do
+    Arel.sql("CONCAT_WS(' | ', members.fname, members.lname)")
+  end
+
   def check_equality
     errors.add(:son, ": Big and Little can't be the same") if father == son && (son.present? && father.present?)
     errors.add(:member_id, ": Little can't be the same as member id") if son == member_id

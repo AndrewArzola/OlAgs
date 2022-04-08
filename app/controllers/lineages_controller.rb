@@ -6,6 +6,8 @@ class LineagesController < ApplicationController
   # GET /lineages or /lineages.json
   def index
     @lineages = Lineage.all
+    @q = Lineage.ransack(params[:q])
+    @lineages_search = @q.result(distinct: true).includes(:member)
   end
 
   # GET /lineages/1 or /lineages/1.json

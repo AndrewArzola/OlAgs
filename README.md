@@ -99,7 +99,17 @@ TODO:
 
 ## CI/CD ##
 
-TBD
+Continuous Intregration (CI) and Continuous Deployment (CD) are meant to ensure correctness of the code for each commit. It's recommended that you make sure both are passing before you commit addtional code to the main or test branch.
+
+Continuous Intregration Checks
+
+-rspec test files in spec/
+-brakeman (security)
+-Rubocop -L (ruby coding standard checker)
+
+Continuous Deployment Checks
+
+-Heroku (Check heroku logs is CD failure)
 
 ## Support ##
 
