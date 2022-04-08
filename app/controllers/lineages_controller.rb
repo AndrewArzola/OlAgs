@@ -7,7 +7,7 @@ class LineagesController < ApplicationController
   def index
     @lineages = Lineage.all
     @q = Lineage.ransack(params[:q])
-    @lineages2 = @q.result(distinct: true).includes(:member)
+    @lineagesSearch = @q.result(distinct: true).includes(:member)
   end
 
   # GET /lineages/1 or /lineages/1.json
