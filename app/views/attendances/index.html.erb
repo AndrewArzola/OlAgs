@@ -29,8 +29,8 @@ status: 403 'Forbidden'
                 <tr>
                   <td><%= Member.where(id: attendance.member_id).last.fname %> <%= Member.where(id: attendance.member_id).last.lname %></td>
                   <td><%= Event.where(id: attendance.event_id).last.name %></td>
-                  <td><%= attendance.attended %></td>
-                  <td><%= attendance.rsvp %></td>
+                  <td><%= attendance.unicode_show(attendance.attended?) %></td>
+                  <td><%= attendance.unicode_show(attendance.rsvp?) %></td>
                   <% if Member.find_by(:email =>current_admin.email).admin? %>
                   <td><%= link_to 'Show', attendance %></td>
                   <td><%= link_to 'Edit', edit_attendance_path(attendance) %></td>

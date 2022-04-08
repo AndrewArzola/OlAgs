@@ -10,6 +10,14 @@ class Attendance < ApplicationRecord
     Arel.sql("CONCAT_WS(' | ', members.fname, members.lname)")
   end
 
+  def unicode_show(condtion)
+    if condtion
+      "\u2705"
+    else
+      "\u274C"
+    end
+  end
+
   def attendance_mail(search)
     emails = ''
     search.each do |d|
