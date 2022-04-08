@@ -58,7 +58,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @lineagesSearch.each do |lineage| %>
+                <% @lineages_search.each do |lineage| %>
                   <tr>
                     <td><%= link_to Member.where(id: lineage.member_id).last.fname, member_path(lineage.member_id)%></td>
                     <td><%= link_to(lineage.name_check(lineage.father))%></td>
