@@ -3,7 +3,7 @@
 require 'application_system_test_case'
 
 class LineagesTest < ApplicationSystemTestCase
-  setup do
+  before do
     @lineage = lineages(:one)
   end
 

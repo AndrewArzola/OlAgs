@@ -3,7 +3,7 @@
 require 'application_system_test_case'
 
 class EventsTest < ApplicationSystemTestCase
-  setup do
+  before do
     @event = events(:one)
   end
 

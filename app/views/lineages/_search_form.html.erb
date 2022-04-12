@@ -1,0 +1,13 @@
+<%= search_form_for @q do |f| %>
+    <div class="container">
+      <div class="row justify-content-end">
+        <div class="col">
+          <%= f.label :member_full_name_cont, "Member Name" %>
+          <%= f.search_field :member_full_name_cont %>
+        </div>
+        <div class = "col">
+          <%= f.submit %>
+        </div>
+      </div>
+    </div>                    
+    <% end %>

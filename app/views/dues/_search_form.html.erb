@@ -3,8 +3,8 @@
   <div class="container">
     <div class="row justify-content-end">
       <div class="col">
-        <%= f.label :member_fname_cont, "Members First Name" %>
-        <%= f.search_field :member_fname_cont %>
+        <%= f.label :member_full_name_cont, "Member Name" %>
+        <%= f.search_field :member_full_name_cont %>
       </div>
       <div class="col">
         <%= f.label :event_name_cont, "Event Name" %>
@@ -12,7 +12,7 @@
       </div>
       <div class="col">   
         <%= f.label :paid_eq, "Paid?" %>
-        <%= f.search_field :paid_eq, placeholder:"True/False" %>
+        <%= f.search_field :paid_eq, placeholder:"true/false" %>
       </div>
       <div class = "col">
         <%= f.submit %>
