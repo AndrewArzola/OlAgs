@@ -35,8 +35,10 @@ Download this code repository by using git:
   -rails webpacker:install (might be optional)
   -rails db:create
   -rails db:migrate
+  -rails db:seed
   
-  alternatively run this command: bundle install && rails db:create && rails db:migrate
+  alternatively run this command: bundle install && rails db:create && rails db:migrate && rails db:seed
+  Note (required): look at the Execute Code section to learn how to seed your data
 
  ## Database Creation ##
 
@@ -77,9 +79,15 @@ Run the following code in Powershell if using windows or the terminal using Linu
 
   `cd olAgs`
 
+Seed your data
+
+  Our app requires that you have a member in the member table with your email to login in. To do this pre popluate your data baseusing the templates in the comments of the db/seed.rb file. 
+
+  Note: After populating your database, you can run the rake db:seed:dump to dump all your current data into the seed file
+
 Install the app
 
-  `bundle install && rails webpacker:install && rails db:create && db:migrate`
+  `bundle install && rails webpacker:install && rails db:create && db:migrate && rails db:seed`
 
 Run the app
   `rails server --binding:0.0.0.0`
@@ -90,12 +98,13 @@ The application can be seen using a browser and navigating to http://localhost:3
 TODO:
 ## Environmental Variables/Files ##
 
-** Add instructions/description if your application requires it.
+ENV['GOOGLE_OAUTH_CLIENT_ID'] and ENV['GOOGLE_OAUTH_CLIENT_SECRET'] are set in the development.rb file. 
+
+When integrating oauth to a new application it is important to make sure that the client ID and client secret are the owners and setup through the Google Cloud API platform
 
 ## Deployment ##
 
-** Add instructions about how to deploy to Heroku
-
+How to deploy in heroku: https://devcenter.heroku.com/articles/git
 
 ## CI/CD ##
 

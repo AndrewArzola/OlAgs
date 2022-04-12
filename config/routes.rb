@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   devise_scope :admin do
     get '/sign_in', to: 'admins/sessions#new', as: :new_admin_session
     get '/sign_out', to: 'admins/sessions#destroy', as: :destroy_admin_session
+    get '/help', to: 'members#help'
     get '/members/:id', to: 'members#show'
     get '/lineages/:id', to: 'lineages#show'
     root 'dashboards#show'
