@@ -23,6 +23,9 @@ class MembersController < ApplicationController
   # GET /members/1 or /members/1.json
   def show; end
 
+  # Documention
+  def help; end
+
   # GET /members/new
   def new
     @member = Member.new

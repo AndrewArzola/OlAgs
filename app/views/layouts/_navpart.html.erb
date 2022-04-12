@@ -26,6 +26,9 @@
           <li class="nav-item">
             <%= link_to "Attendance", attendances_path, class:"nav-link" %>
           </li>
+          <li class="nav-item">
+            <%= link_to "Help", help_path, class:"nav-link" %>
+          </li>
           <% end %>
           <% if Member.find_by(:email =>current_admin.email).admin? %>
             <li class="nav-item dropdown">

@@ -1,0 +1,178 @@
+
+
+<% if Member.find_by(:email =>current_admin.email).admin? == false && Member.find_by(:email =>current_admin.email).active? == true%>
+    <h1>Members Page</h1>
+    <p>Within the member&rsquo;s page, you can view all members of the organization, alumni and current. You can view members&rsquo; names, their join date, their graduation date, their email address, their current city, their college major, and their member status.</p>
+    <p>You can also search by member name, email address, major, and active status.</p>
+    <h1>Events Page</h1>
+    <p>The main focus of the events page is the calendar. The calendar displays all of the organization&rsquo;s events in one place. Events are displayed on the calendar on the day that they are taking place. Events can also be viewed at the bottom of the page in their corresponding column.&nbsp;</p>
+    <p>Beside each event name is a details button. When you click the button, you will be directed to a new page. On that page, the event name, description, location, start time, and end time will be displayed. Additionally, the number of members marked attended at the event, the number of members RSVP&rsquo;d to the event, and a list of all members&rsquo; names who have RSVP&rsquo;d to the event are displayed.</p>
+    <p>To RSVP to the event, you can click the &ldquo;RSVP to this Event&rdquo; button. An attendance record will automatically be generated for the event with a green check mark for RSVP and the button will change to say &ldquo;Rescind RSVP to this Event&rdquo;. If you can no longer make it to the event, you can click the &ldquo;Rescind RSVP to this Event&rdquo; button, and the attendance record will be deleted.</p>
+    <h1>Lineages Page</h1>
+    <p>The lineage page displays the father and son information for members of the club. Each lineage appears in a column, with the eldest member appearing at top along with their join date. All members of the lineage will follow sequentially.</p>
+    <h1>Dues Page</h1>
+    <p>On the dues page, any dues assigned to you will appear. For each due record, you can see the event the due is associated with, the due amount, and whether or not it has been paid.&nbsp;</p>
+    <p>You can also search by member name, event name, and paid status.</p>
+    <h1>Attendance Page</h1>
+    <p>On the attendance page, any attendance records associated with you will appear. For each attendance record, you can see the event the attendance is associated with, whether you have RSVP&rsquo;d to the event, and whether you were marked present at the event.&nbsp;</p>
+    <p>You can also search by member name, event name, attended status, and RSVP status.</p>
+<%elsif Member.find_by(:email =>current_admin.email).active? == true%>
+    <h1>Member Page</h1>
+    <p>The member page contains information on all members which includes names, join date, graduation date, email address, phone number, city, admin, major, active status. You can search members by name, join date, major, and active status.&nbsp;</p>
+    <h2>Creating Member</h2>
+    <h3>Requirements&nbsp;</h3>
+    <ul>
+    <li>Presence of first name, last name, email, and joinDate</li>
+    <li>Email must be in email format (Doesn&rsquo;t have to be valid)</li>
+    </ul>
+    <h2>Views</h2>
+    <h3>User</h3>
+    <p>Users will be able to see and search for members, but they will not see the admin or active status of any member. The ability to create, destroy, edit, and show will not be accessible to members even if they manually access these pages.&nbsp;</p>
+    <h3>Admin</h3>
+    <p>Admins see all attributes of members, get to create, destroy, edit, and show members, and have access to both the search bar and mass email button.</p>
+    <h2>Email</h2>
+    <p>The mass email button opens your personal email application with a list of emails in the cc: bar. This email list is based on your search results. For example if you click the button without searching you will email all members in the member table. While if you search all active users and click the button, you will email all active members in the table.&nbsp;</p>
+    <p>Additionally within each show page for a member is an email button, which opens your email application with the member in the to: bar.&nbsp;</p>
+    <h1>Lineage Page</h1>
+    <p>The page is a collection of one to one relations (linked lists*) dictated by a father to son relationship<strong> sorted by oldest first member (head*) to the youngest</strong>. This means that each member will have <strong>exactly one son and exactly one father</strong>. The member without a father is the first member in the lineage (head*), while the member without a son is the last member of a lineage (tail*).</p>
+    <h2>Creating a Lineage</h2>
+    <p>To create a lineage, navigate to the new lineage page, where you will be able to create a lineage link (node*). Start with the oldest member in the lineage and work your way down the heritage tree ending with the newest member in the lineage. <em>Note: You can create the lineage from the bottom up, but it will not display until the head is set. </em>It should be said that creating entire lineages manually is far too time consuming and recommended you do so using <strong>seeds</strong> that automatically populate the lineage table. <em>Note: you will have to seed the corresponding members first</em>. How to use seeds is discussed in page &lt;TBA&gt;.</p>
+    <h3>Requirements&nbsp;</h3>
+    <ul>
+    <li>Member you want to assign to link must be in the <strong>member table</strong></li>
+    <li>Member attribute must be present&nbsp;</li>
+    <li>Uniqueness across each link attribute&nbsp;</li>
+    <ul>
+    <li>No other link with the same <strong>member</strong> can exist</li>
+    <li>No other link with the same <strong>father</strong> can exist</li>
+    <li>No other link with the same <strong>son</strong> can exist</li>
+    <li><strong>Exception</strong>: Father and Son can exist with multiple &ldquo;None&rdquo; (nil*) values</li>
+    </ul>
+    <li>Uniqueness within each link attribute</li>
+    <ul>
+    <li>Member cannot equal father</li>
+    <li>Member cannot equal son</li>
+    <li>Son cannot equal father</li>
+    <li><strong>Exception</strong>: Father and Son can both be nil</li>
+    </ul>
+    </ul>
+    <h3>Examples (Not real code)</h3>
+    <h4>Invalid links</h4>
+    <p>Uniqueness across links:</p>
+    <p>&nbsp;&nbsp;&nbsp; First = {member: &ldquo;B&rdquo;, father: &ldquo;A&rdquo;, son: &ldquo;C&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Invalid_member = {<strong>member: &ldquo;B&rdquo;</strong>, father: &ldquo;D&rdquo;, son:&nbsp; &ldquo;E&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Invalid_father = {member: &ldquo;F&rdquo;, <strong>father: &ldquo;A&rdquo;</strong>, son: &ldquo;G&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Invalid_son =&nbsp; {member: &ldquo;H&rdquo;, father: &ldquo;I&rdquo;, <strong>son: &ldquo;C&rdquo;</strong>}</p>
+    <p>Uniqueness within links:</p>
+    <p>&nbsp;&nbsp;&nbsp; Same_all = {member: &ldquo;A&rdquo;, father: &ldquo;A&rdquo;, son: &ldquo;A&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Same_Member_Son = {member: &ldquo;B&rdquo;, father: &ldquo;C&rdquo;, son: &ldquo;B&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Same_Member_father = {member: &ldquo;D&rdquo;, father: &ldquo;D&rdquo;, son: &ldquo;C&rdquo;}</p>
+    <h4>Valid links&nbsp;</h4>
+    <p>First (head*) link:&nbsp;</p>
+    <p>&nbsp;&nbsp;&nbsp; Head_1 = {member: &ldquo;A&rdquo;, father: &ldquo;None&rdquo;, son: &ldquo;B&rdquo;}</p>
+    <p><strong>&nbsp;&nbsp;&nbsp; </strong>Head_2 = {member: &ldquo;A&rdquo;, father: &ldquo;None&rdquo;, son: &ldquo;None&rdquo;}</p>
+    <p>Last (tail*) link:&nbsp;</p>
+    <p>&nbsp;&nbsp;&nbsp; Tail = {member: &ldquo;B&rdquo;, father: &ldquo;A&rdquo;, son: &ldquo;None&rdquo;}</p>
+    <p>None (nil) exception:</p>
+    <p>&nbsp;&nbsp;&nbsp; Nil_1 = {member: &ldquo;A&rdquo;, father: &ldquo;B&rdquo;, son: &ldquo;None&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Nil_2 = {member: &ldquo;C&rdquo;, father: &ldquo;D&rdquo;, son: &ldquo;None&rdquo;}</p>
+    <h3>Warnings/Things to note</h3>
+    <h4>Relationships&nbsp;</h4>
+    <h5>Adding to an existing lineage</h5>
+    <p>This adds some level of backtracking when you want to add a node to an existing lineage as you would need to edit the previous link and potentially the next link (if you want to add a link to the middle of a lineage).</p>
+    <p>&nbsp;&nbsp;&nbsp; Previous = {member: &ldquo;B&rdquo;, father: &ldquo;A&rdquo;, son: &ldquo;C&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Next = {member: &ldquo;C&rdquo;, father: &ldquo;B&rdquo;, son: &ldquo;None&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; New = {member: &ldquo;D&rdquo;, father: &ldquo;B&rdquo;, <strong>son: &ldquo;C&rdquo;</strong>}&nbsp;</p>
+    <p>&nbsp;&nbsp;&nbsp; Note: Will have to leave as son = &ldquo;None&rdquo; when creating link or edit before creating new</p>
+    <p>&nbsp;&nbsp;&nbsp; Previous = {member: &ldquo;B&rdquo;, father: &ldquo;A&rdquo;, son = &ldquo;D&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Next = {member: &ldquo;C&rdquo;, father: &ldquo;D&rdquo;, son = &ldquo;None&rdquo;}</p>
+    <p>This will result in&nbsp;</p>
+    <h5>Father relationship is not maintained</h5>
+    <p>The requirements above are in place so that you don&rsquo;t create a link that will break the system and prevent most nonsensical relationships. However it should be noted that the <strong>father relationship is not maintained</strong>. Meaning that a link can list a member as a son without that member listing the senior member as a father or even listing a different father.</p>
+    <p>&nbsp;&nbsp;&nbsp; Link_1 = {member: &ldquo;B&rdquo;, father: &ldquo;A&rdquo;, son: &ldquo;C&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Link_2 = {member: &ldquo;C&rdquo;, father: &ldquo;None&rdquo;, son: &ldquo;D&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Link_2 = {member: &ldquo;C&rdquo;, father: &ldquo;G&rdquo;, son: &ldquo;D&rdquo;}</p>
+    <p>The links above are allowed and will actually print as expected creating the lineage A-&gt;B-&gt;C-&gt;D, despite the fact that the internal logic is wrong.</p>
+    <h5>Master Lineage and Separate Lineages</h5>
+    <p>While this logic is wrong it allows for some unique applications. For example if you wanted a master lineage with branching sub lineages, you could abuse this loophole.</p>
+    <p>&nbsp;&nbsp;&nbsp; Master_tail = {member: &ldquo;C&rdquo;, father: &ldquo;B&rdquo;, son: &ldquo;D&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Sub_head =&nbsp; {member: &ldquo;D&rdquo;, father: &ldquo;None&rdquo;, son: &ldquo;E&rdquo;}</p>
+    <p>Assuming the logical implementation of the previous nodes A-B, this would create two Lineages. A-&gt;B-&gt;C-&gt;D-&gt;F and D-&gt;F. Adding to the sub lineage will continue to add to the master lineage. <em>Note: this implementation will likely slow down the rendering of this page.</em></p>
+    <p>For completely separate lineages follow the steps below.</p>
+    <p>&nbsp;&nbsp;&nbsp; Previous_tail = {member: &ldquo;C&rdquo;, father: &ldquo;B&rdquo;, son: &ldquo;None&rdquo;}</p>
+    <p>&nbsp;&nbsp;&nbsp; Head_head =&nbsp; {member: &ldquo;D&rdquo;, father: &ldquo;None&rdquo;, son: &ldquo;E&rdquo;}</p>
+    <p>This will create the lineages A-&gt;B-&gt;C and D-&gt;F. The unspoken father of the head of any lineage will be the tail of the previous lineage.</p>
+    <h2>Views</h2>
+    <h3>User</h3>
+    <p>Users will see the lineages and be able to click on the name which transfers them to the view page of the member.</p>
+    <h3>Admin</h3>
+    <p>Admins see all attributes of a lineage link, get to create, destroy, edit, and show members, and have access to both the search bar and mass email button.</p>
+    <h1>Events Page</h1>
+    <p>The events page contains information of all the current, upcoming, and past events. For each event there is an option to view more details of that particular event. Further information of an event include: event name, description, location, start time, end time, and more options for admin.</p>
+    <h2>Creating an Event</h2>
+    <p>There are two different ways to create an event. One way is to click on the &ldquo;Add&rdquo; tag in the navigation bar, then click on &ldquo;New Event&rdquo; in the following drop down menu. Another way will be to click on the &ldquo;Events&rdquo; tag in the navigation bar, then clicking &ldquo;Add New Event&rdquo; on the Events page.</p>
+    <h3>Requirements</h3>
+    <ul>
+    <li>Event name, description, location, start time, and end time are needed to successfully create an event.</li>
+    <li>Start and end time have to be in the future (not in the past, including seconds)</li>
+    <li>The start time and end time should not be the same time.</li>
+    <li>Start time should come before the end time.</li>
+    <li>Time is based on CST</li>
+    </ul>
+    <h2>Editing an Event</h2>
+    <p>To edit an event, click on the &ldquo;Details&rdquo; link of an existing event, then click on the &ldquo;Edit Event&rdquo; button on the details page. When editing an event, the same criteria and requirements will be held as when creating a new event.</p>
+    <h3>Requirements</h3>
+    <ul>
+    <li>Event name, description, location, start time, and end time are needed to successfully create an event.</li>
+    <li>Start and end time have to be in the future (not in the past, including seconds)</li>
+    <li>The start time and end time should not be the same time.</li>
+    <li>Start time should come before the end time.</li>
+    <li>Time is based on CST</li>
+    </ul>
+    <h2>Deleting an Event</h2>
+    <p>To delete an event, click on the &ldquo;Details&rdquo; link near the designated event. Once taken to the details page, click &ldquo;Remove Event&rdquo; to delete the event.</p>
+    <h2>Views</h2>
+    <h3>User</h3>
+    <p>Users will see the events calendar, current events, upcoming events, and past events. When the user clicks on details, the user will see the name, description, location, start time, end time, and the RSVP option for events.</p>
+    <h3>Admin</h3>
+    <p>A user with admin rights will see all attributes of events. Admin will be able to create, remove, and edit events. Admin will also be able to view how many members RSVP to an event, which also displays the name of the RSVP&rsquo;d members. Admins will also know how many members attended an event.</p>
+    <h1>Dues Page</h1>
+    <p>The dues page contains information on all dues that members are required to pay, which includes the member&rsquo;s name, the event name associated with the due, the due amount, and whether or not the due has been paid. You can search dues by name, event, and paid status.</p>
+    <h2>Creating a Due</h2>
+    <p>A due can be created by accessing the dues page and clicking on the &ldquo;New Due&rdquo; button.</p>
+    <h3>Requirements</h3>
+    <ul>
+    <li>Member and event selected from dropdown tables</li>
+    <li>Numerical value for due amount (do not enter the &lsquo;$&rsquo; sign), will display dollars and cents</li>
+    </ul>
+    <h2>Deleting a Due</h2>
+    <p>To delete a due, click on the &ldquo;destroy&rdquo; button in the due&rsquo;s row. A pop up notification will appear, asking to confirm the deletion. Clicking &ldquo;Okay&rdquo; will delete the due from the application.</p>
+    <h2>Views</h2>
+    <h3>User</h3>
+    <p>Users will only be able to see their own dues and search for their own dues. The ability to create, destroy, edit, and show will not be accessible to members even if they manually access these pages.&nbsp;</p>
+    <h3>Admin</h3>
+    <p>Admins see the dues of all members, get to create, destroy, edit, and show dues. Admins will be able to search all dues using the search bar and will be able to access the mass email button.</p>
+    <h2>Email</h2>
+    <p>The mass email button opens your personal email application with a list of emails in the cc: bar. This email list is based on your search results. For example, if you click the button without searching you will email all members with dues in the due table. If you search all members with unpaid dues and click the email button, you will email all members with unpaid dues in the table.&nbsp;</p>
+    <h1>Attendance Page</h1>
+    <p>The attendance page contains information on all of the attendance records of members, which include the member&rsquo;s name, the event name associated with the attendance record, whether that member RSVP&rsquo;d or not, and whether that member attended the event or not. You can search attendance records by name, event, RSVP status, and attendance status.</p>
+    <h2>Creating an Attendance Record - Alternative One</h2>
+    <p>The first way to create an attendance record is by accessing the attendance page and clicking on the &ldquo;New Attendance'' button. Successful completion of the form will result in a new attendance record.&nbsp;</p>
+    <h3>Requirements</h3>
+    <ul>
+    <li>Member and event selected from dropdown tables</li>
+    </ul>
+    <h2>Creating an Attendance Record - Alternative Two</h2>
+    <p>The second way to create an attendance record is from the events page. If a user clicks on the details button next to an event in the calendar, a new page will open. Inside that new page, a button will appear. If no attendance record for the user exists for that event, the button will read &ldquo;RSVP to This Event.&rdquo; If this button is clicked, a new attendance record will be created, containing the user&rsquo;s name, the event, and a checked box for RSVP.</p>
+    <h2>Deleting an Attendance Record - Alternative One</h2>
+    <p>The first way to delete an attendance record is by clicking on the &ldquo;destroy&rdquo; button in the attendance record&rsquo;s row. A pop up notification will appear, asking to confirm the deletion. Clicking &ldquo;Okay&rdquo; will delete the attendance record from the application.</p>
+    <h2>Deleting an Attendance Record - Alternative Two</h2>
+    <p>The second way to delete an attendance record is from the events page. If a user clicks on the details button next to an event in the calendar, a new page will open. Inside that new page, a button will appear. If an attendance record for the user exists for that event, the button will read &ldquo;Rescind RSVP to This Event.&rdquo; If this button is clicked, the attendance record for the user for that event will be deleted.</p>
+    <h2>Views</h2>
+    <h3>User</h3>
+    <p>Users will only be able to see their own attendance records and search for their own attendance records. The ability to create, destroy, edit, and show will not be accessible to members, except through the event page&rsquo;s RSVP and Rescind RSVP buttons.&nbsp;</p>
+    <h3>Admin</h3>
+    <p>Admins see the attendance records of all members, get to create, destroy, edit, and show attendance records. Admins will be able to search all attendance records using the search bar and will be able to access the mass email button.</p>
+    <h2>Email</h2>
+    <p>The mass email button opens your personal email application with a list of emails in the cc: bar. This email list is based on your search results. For example, if you click the button without searching you will email all members with attendance records in the attendance table. If you search all members RSVP&rsquo;d to an event and click the email button, you will email all members that are currently RSVP&rsquo;d to that event in the table.&nbsp;</p>
+<%end%>

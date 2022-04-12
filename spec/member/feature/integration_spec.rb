@@ -257,6 +257,49 @@ RSpec.describe('Authentication', type: :feature) do
       expect(page).to(have_content('Jane'))
     end
   end
+
+  describe 'Creating Edit Attendance', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testMember2 = Member.create!(fname: 'Niles', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
+      testEvent2 = Event.create!(name: 'Cake', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
+      testAttendance1 = Attendance.create!(member_id: testMember1.id, event_id: testEvent1.id, rsvp: 1, attended: 0)
+      visit attendances_path
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Funeral'))
+      visit edit_attendance_path(id: testAttendance1.id)
+      select 'Niles', from: 'attendance_member_id', match: :first
+      select 'Cake', from: 'attendance_event_id', match: :first
+      click_on 'Submit'
+      visit attendances_path
+      expect(page).to(have_content('Niles'))
+      expect(page).to(have_content('Cake'))
+    end
+  end
+
+  describe 'Delete Attendance', type: :feature do
+    it 'valid inputs' do
+      Attendance.destroy_all
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
+      testAttendance1 = Attendance.create!(member_id: testMember1.id, event_id: testEvent1.id, rsvp: 1, attended: 0)
+      visit attendances_path
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Funeral'))
+
+      click_on 'Destroy', match: :first
+
+      begin
+        page.driver.browser.switch_to.alert.accept
+      rescue StandardError
+        Selenium::WebDriver::Error::NoSuchAlertError
+      end
+
+      expect(page).not_to(have_content('John'))
+      expect(page).not_to(have_content('Funeral'))
+    end
+  end
   # Due Test
 
   describe 'paid', type: :feature do
@@ -294,6 +337,48 @@ RSpec.describe('Authentication', type: :feature) do
     end
   end
 
+  describe 'Creating Edit Attendance', type: :feature do
+    it 'valid inputs' do
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testMember2 = Member.create!(fname: 'Niles', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
+      testEvent2 = Event.create!(name: 'Cake', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
+      testDue1 = Due.create!(member_id: testMember1.id, event_id: testEvent1.id, dueAmount: 1, paid: 0)
+      visit dues_path
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Funeral'))
+      visit edit_due_path(id: testDue1.id)
+      select 'Niles', from: 'due_member_id', match: :first
+      select 'Cake', from: 'due_event_id', match: :first
+      click_on 'Submit'
+      visit dues_path
+      expect(page).to(have_content('Niles'))
+      expect(page).to(have_content('Cake'))
+    end
+  end
+
+  describe 'Delete Attendance', type: :feature do
+    it 'valid inputs' do
+      Due.destroy_all
+      testMember1 = Member.create!(fname: 'John', lname: 'Henry', email: 'JohnHenry@email.com', joinDate: '01/01/2001', admin: 1)
+      testEvent1 = Event.create!(name: 'Funeral', location: 'Church', start_time: '03/03/2099 10:00PM', end_time: '03/03/2099 11:00PM', description: 'N/A')
+      testDue1 = Due.create!(member_id: testMember1.id, event_id: testEvent1.id, dueAmount: 1, paid: 0)
+      visit dues_path
+      expect(page).to(have_content('John'))
+      expect(page).to(have_content('Funeral'))
+
+      click_on 'Destroy', match: :first
+
+      begin
+        page.driver.browser.switch_to.alert.accept
+      rescue StandardError
+        Selenium::WebDriver::Error::NoSuchAlertError
+      end
+
+      expect(page).not_to(have_content('John'))
+      expect(page).not_to(have_content('Funeral'))
+    end
+  end
   # Events
   # 2023-03-06 13:00:00 UTC
   describe 'Event test 1', type: :feature do
@@ -310,6 +395,10 @@ RSpec.describe('Authentication', type: :feature) do
       expect(page).to(have_content('My House'))
       expect(page).to(have_content('03/03/2023 05:00PM'))
       expect(page).to(have_content('03/03/2023 09:00PM'))
+      visit '/events/1'
+      click_on "RSVP to This Event"
+      visit '/events/1'
+      click_on "Rescind RSVP to This Event"
     end
   end
 
