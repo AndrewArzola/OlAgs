@@ -16,7 +16,7 @@
     <h1>Attendance Page</h1>
     <p>On the attendance page, any attendance records associated with you will appear. For each attendance record, you can see the event the attendance is associated with, whether you have RSVP&rsquo;d to the event, and whether you were marked present at the event.&nbsp;</p>
     <p>You can also search by member name, event name, attended status, and RSVP status.</p>
-<%elsif Member.find_by(:email =>current_admin.email).active? == true%>
+<%elsif Member.find_by(:email =>current_admin.email).admin? == true && Member.find_by(:email =>current_admin.email).active? == true%>
     <h1>Member Page</h1>
     <p>The member page contains information on all members which includes names, join date, graduation date, email address, phone number, city, admin, major, active status. You can search members by name, join date, major, and active status.&nbsp;</p>
     <h2>Creating Member</h2>
