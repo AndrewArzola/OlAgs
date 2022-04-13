@@ -20,7 +20,7 @@ class Lineage < ApplicationRecord
     errors.add(:member_id, ": Big can't be the same as member id") if father == member_id
   end
 
-  #Function prints out name with link. father_son variable checks if input is father or son
+  # Function prints out name with link. father_son variable checks if input is father or son
   def name_check(attribute, father_son)
     if Member.exists?(id: attribute)
       link_to(Member.where(id: attribute).last.fname, Rails.application.routes.url_helpers.member_path(attribute))
