@@ -1,3 +1,5 @@
+
+
 <% if Member.find_by(:email =>current_admin.email).admin? == false && Member.find_by(:email =>current_admin.email).active? == true%>
     <h1>Members Page</h1>
     <p>Within the member&rsquo;s page, you can view all members of the organization, alumni and current. You can view members&rsquo; names, their join date, their graduation date, their email address, their current city, their college major, and their member status.</p>
