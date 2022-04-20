@@ -61,8 +61,8 @@
                 <% @lineages_search.each do |lineage| %>
                   <tr>
                     <td><%= link_to Member.where(id: lineage.member_id).last.fname, member_path(lineage.member_id)%></td>
-                    <td><%= link_to(lineage.name_check(lineage.father))%></td>
-                    <td><%= link_to(lineage.name_check(lineage.son))%></td>
+                    <td><%= link_to(lineage.name_check(lineage.father, 1))%></td>
+                    <td><%= link_to(lineage.name_check(lineage.son, 0))%></td>
                     <td><%= link_to 'Show', lineage %></td>
                     <td><%= link_to 'Edit', edit_lineage_path(lineage) %></td>
                     <td><%= link_to 'Destroy', lineage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
