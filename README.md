@@ -1,6 +1,6 @@
 # README
 
-This is the Ol' Ags Web App developed by OlAgsHistory Team for CSCE 431.
+This is an internal app for the Old Army Gentleman's Club. The app's purpose is to track the lineage, member, events, attendances, and dues of the clubs. It's written in ruby using the ruby on rails framework. Developed by OlAgsHistory Team for CSCE 431.
 
   ## Requirements ##
 
