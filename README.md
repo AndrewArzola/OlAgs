@@ -1,9 +1,7 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the Ol' Ags Web App developed by OlAgsHistory Team for CSCE 431.
 
-Things you may want to cover:
   ## Requirements ##
 
 This code has been run and tested on:
@@ -95,7 +93,6 @@ Run the app
 The application can be seen using a browser and navigating to http://localhost:3000/
 
 
-TODO:
 ## Environmental Variables/Files ##
 
 ENV['GOOGLE_OAUTH_CLIENT_ID'] and ENV['GOOGLE_OAUTH_CLIENT_SECRET'] are set in the development.rb file. 
